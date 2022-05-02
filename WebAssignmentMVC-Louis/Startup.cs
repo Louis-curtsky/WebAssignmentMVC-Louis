@@ -27,7 +27,8 @@ namespace WebAssignmentMVC
                 options.Cookie.IsEssential = true;
             });
 
-            services.AddMvc();
+            //services.AddControllersWithViews(); //Will be used later maybe
+            services.AddMvc().AddRazorRuntimeCompilation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,17 +65,6 @@ namespace WebAssignmentMVC
                     defaults: new { controller = "Person", action = "Searching" }
                     );
 
-                endpoints.MapControllerRoute(
-                    name: "GuessGameRoute",
-                    pattern: "/GuessingGame",
-                    defaults: new { controller = "GuessGame", action = "GuessGame" }
-                    );
-
-                endpoints.MapControllerRoute(
-                    name: "temperatureRoute",
-                    pattern: "Temperature/AddTemp",
-                    defaults: new  { controller="Temperature", action="Create" }
-                    );
                 endpoints.MapControllerRoute(
                     name: "finalRoute",
                     pattern: "{controller=Home}/{action=Index}/{id?}"

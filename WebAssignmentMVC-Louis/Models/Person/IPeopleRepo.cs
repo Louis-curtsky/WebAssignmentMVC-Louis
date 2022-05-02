@@ -8,9 +8,9 @@ namespace WebAssignmentMVC.Models.Person
     public interface IPeopleRepo
     {
         bool Initialize();
+        List<Person> Read();
         List<Person> All();
         List<PersonViewModel> GetList();
-        Person Create(string firstName, string lastName, string city, string phone);
         List<Person> GetPersons(string firstName, string lastName, string city, string phone);
         List<string> Getcities();
         List<Person> GetByID(int id);

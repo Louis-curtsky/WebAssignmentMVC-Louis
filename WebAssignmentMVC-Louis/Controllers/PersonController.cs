@@ -24,21 +24,22 @@ namespace WebAssignmentMVC.Controllers
         
 
         [HttpGet]
-        public IActionResult Index(string firstName, string LastName, string city, string phone)
+        public IActionResult Index()
         {
-            /*            if (Initialized)
+                        if (Initialized)
                         {
-                            return View(_memoryPeople.GetPersons(firstName, LastName, city, phone));
+                //                            return View(_memoryPeople.GetPersons(firstName, LastName, city, phone));
+                            return View(_memoryPeople.All());
                         }
                         else
                         {
                             Initialized = _memoryPeople.Initialize();
                             return View(_memoryPeople.All());
                         }
-            */
-            Initialized = _memoryPeople.Initialize();
+            
+//            Initialized = _memoryPeople.Initialize();
 
-            return View(_memoryPeople.All());
+ //           return View(_memoryPeople.All());
         }
 
         [HttpGet]
@@ -59,35 +60,30 @@ namespace WebAssignmentMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(List<CreatePersonViewModel> person)
         {
-            CreatePersonViewModel createPerson = new CreatePersonViewModel();
+            Person inPerson = new Person();
+            CreatePersonViewModel createPerson = new CreatePersonViewModel(inPerson);
             createPerson.CityList = _memoryPeople.Getcities();
+            if (person.Count != 0)
+            {
+                List<Person> peopleSearch = _memoryPeople.All();
+                return PartialView("_SearchResult", peopleSearch);
+            }
+
             return View(createPerson);
         }
 
         [HttpPost]
-        public IActionResult Create(CreatePersonViewModel createPeople)
+        public IActionResult Create(CreatePersonViewModel personViewModel)
         {
-            Person addPerson = new Person();
+
             if (ModelState.IsValid)
             {
-                addPerson =
-                    _peopleService.Add(createPeople.FirstName, createPeople.LastName, createPeople.City, createPeople.Phone);
-                //                _memoryPeople.Initialize();
-                return RedirectToAction("Index", new
-                {
-//                    id = addPerson.Id,
-                    firstName = addPerson.FirstName,
-                    lastName = addPerson.LastName,
-                    city = addPerson.City,
-                    phone = addPerson.Phone
-                });
+                _peopleService.Add(personViewModel);
+                return RedirectToAction(nameof(Index));
             }
-
-            createPeople.CityList = _memoryPeople.Getcities();
-
-            return View(createPeople);
+            return View();
         }
 
 

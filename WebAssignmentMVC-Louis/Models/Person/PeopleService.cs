@@ -29,15 +29,9 @@ namespace WebAssignmentMVC.Models.Person
         public List<Person> All()
         {
             IMemoryPeopleRepo storage = new IMemoryPeopleRepo();
-            return storage.peopleStorage;
+            return _peopleRepo.Read();
          }
 
-        public Person Add(string firstName, string lastName, string city, string phone)
-        {
-//            IMemoryPeopleRepo addPerson = new IMemoryPeopleRepo();
-            
-            return _PeopleRepo.Create(firstName, lastName, city, phone);
-        }
         public bool Edit(int id, CreatePersonViewModel person)
         {
             throw new NotImplementedException();
@@ -56,6 +50,10 @@ namespace WebAssignmentMVC.Models.Person
             return _peopleRepo.Delete(id);
         }
 
-   
+        public List<Person> Add(CreatePersonViewModel personViewModel)
+        {
+            List<Person> resultList = _PeopleRepo.GetPersons(personViewModel.FirstName, personViewModel.LastName, personViewModel.City, personViewModel.Phone);
+            return resultList;
+        }
     }
 }

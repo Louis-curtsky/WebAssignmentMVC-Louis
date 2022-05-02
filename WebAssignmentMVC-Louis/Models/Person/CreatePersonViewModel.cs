@@ -33,5 +33,13 @@ namespace WebAssignmentMVC.Models.Person
             PeopleLists = new List<Person>();
             return PeopleLists;
         }
+
+        public CreatePersonViewModel(Person person)
+        {
+            FirstName = person.FirstName;
+            LastName = person.LastName;
+            City = person.City;
+            Phone = person.Phone;
+        }
     }
 }

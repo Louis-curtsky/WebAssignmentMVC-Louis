@@ -7,7 +7,7 @@ namespace WebAssignmentMVC.Models.Person
 {
     public interface IPeopleService
     {
-        Person Add(string firstName, string lastName, string city, string phone);
+        List<Person> Add(CreatePersonViewModel personViewModel);
         List<Person> All();
         Person FindById(int id);
 

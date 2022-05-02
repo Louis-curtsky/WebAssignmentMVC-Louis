@@ -8,9 +8,9 @@ namespace WebAssignmentMVC.Models.Person
     public class IMemoryPeopleRepo : IPeopleRepo
     {
         public bool Initialized = false;
-        static int idCounter;
-        public List<Person> peopleStorage = new List<Person>();
-        public List<string> cityStorage = new List<string>();
+        private static int idCounter;
+        private static List<Person> peopleStorage = new List<Person>();
+        private static List<string> cityStorage = new List<string>();
 
 
         public bool Initialize()
@@ -61,19 +61,14 @@ namespace WebAssignmentMVC.Models.Person
 
         public List<Person> GetPersons(string firstName, string lastName, string city, string phone)
         {
-            if (peopleStorage.Count == 0)
-            {
-                GetList();
-            }
-            Person person = new Person(firstName, lastName, city, phone);
-
-            person.Id = ++idCounter;
-            person.FirstName = firstName;
-            person.LastName = lastName;
-            person.Phone = phone;
-            person.City = city;    
-            peopleStorage.Add(person);
-            return peopleStorage;
+            peopleStorage.Add(new Person() { 
+                Id = ++idCounter, 
+                FirstName = firstName, 
+                LastName = lastName, 
+                City = city, 
+                Phone = phone });
+            List<Person> returnList = peopleStorage;
+            return returnList;
         }
 
         public List<string> Getcities()
@@ -100,7 +95,7 @@ namespace WebAssignmentMVC.Models.Person
                 city = "";
 
              List<Person> searchPerson = new List<Person>();
-            Initialize();
+ //           Initialize();
             foreach (Person person in peopleStorage)
             {
                 if (person.FirstName == firstName)
@@ -125,7 +120,7 @@ namespace WebAssignmentMVC.Models.Person
 
         public List<Person> GetByID(int id)
         {
-            Initialize();
+//            Initialize();
             List<Person> searchResult = peopleStorage.Where(person => person.Id == id).ToList();
             return searchResult;
         }
@@ -138,7 +133,7 @@ namespace WebAssignmentMVC.Models.Person
 
         public bool Delete(int id)
         {
-            Initialize();
+ //           Initialize();
             for (int i=0; i<peopleStorage.Count; i++)
             {
                 if (peopleStorage[i].Id == id)
@@ -148,6 +143,11 @@ namespace WebAssignmentMVC.Models.Person
                 }
             }
             return false;
+        }
+
+        public List<Person> Read()
+        {
+            return peopleStorage;
         }
     }
 }
