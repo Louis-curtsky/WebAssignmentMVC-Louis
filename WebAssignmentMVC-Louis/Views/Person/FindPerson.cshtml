@@ -1,0 +1,29 @@
+﻿@model List<Person>
+@{
+    ViewData["Title"] = "Persons - Search for Information";
+}
+
+<h3>Search for Person Information</h3>
+<ul class="breadcrumb">
+    <li>
+        <a asp-action="Create">Add Person</a>
+    </li>
+    <li>
+        <a asp-action="Searching">Search Person</a>
+    </li>
+    <li>
+        <a asp-action="FindPerson">Find by ID</a>
+    </li>
+</ul>
+<form asp-action="FindPerson" method="post">
+    <label>Enter ID</label>
+    <input name="Id" type="number" id="inputId" />
+
+    <button onclick="findThroughId('@Url.Action("FindPerson", "Person")', 'inputId')" class="button">Search</button>
+</form>
+<hr />
+<div>
+        <partial name="_PersonDetailView" model="Model" />
+</div>
+
+

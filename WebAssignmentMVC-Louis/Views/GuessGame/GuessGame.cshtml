@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Guess a Number Game";
+}
+<h1>Guess a Number Game</h1>
+<hr />
+<table class="contact">
+    <tr>
+        <th>Highest Score (No. of tries)</th>
+        <th>@ViewBag.CookieGuessNum</th>
+    </tr>
+    <tr>
+        <th>Number correct Guess</th>
+        <th>@ViewBag.CookieHighest</th>
+    </tr>
+    <tr>
+        <th>The NUMBER is</th>
+        <th>@ViewBag.RandNums</th>
+    </tr>
+    <tr>
+        <th>Number of Guess</th>
+        <td>@ViewData["NumGuess"]</td>
+    </tr>
+    <tr>
+        <th>Message</th>
+        <th>
+            <h3 class="@ViewBag.ColorCode">@ViewData["Msg"]</h3>
+        </th>
+    </tr>
+</table>
+<hr />
+<form asp-action="CreateGuess" method="post">
+    <label for="guessnum">Enter a gussing Number</label>
+    <input type="number" name="guessnum" min=1 max=100 step="1" required value="@ViewBag.GuessNum" />
+    <hr />
+    <button type="submit">Click here to submit your guess</button>
+</form>

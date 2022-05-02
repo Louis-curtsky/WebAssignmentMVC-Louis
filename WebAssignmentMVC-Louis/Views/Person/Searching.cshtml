@@ -1,0 +1,58 @@
+﻿@model List<Person>
+@{
+    ViewData["Title"] = "Persons - Find Person";
+}
+
+<h3>Find Person</h3>
+<ul class="breadcrumb">
+    <li>
+        <a asp-action="Create">Add Person</a>
+    </li>
+    <li>
+        <a asp-action="Searching">Search Person</a>
+    </li>
+    <li>
+        <a asp-action="FindPerson">Person By ID</a>
+    </li>
+
+</ul>
+<div display="inline-flex">
+    <div display="inline-flex" flex-direction="row">
+        <table class="contact">
+            <tr>
+                <th>
+                    <form asp-action="Searching" method="post">
+                        <div class="form-row">
+                            <div class="col">
+                                <label>First Name</label>
+                                <input name="FirstName" type="text" id="inputId" />
+                            </div>
+                            <div class="col">
+                                <label>Last Name</label>
+                                <input name="LastName" type="text" id="LastName" />
+                            </div>
+                            <div class="col">
+                                <Lable>City</Lable>
+                                <input name="City" type="text" id="City " list="cityList" />
+                            </div>
+                            <div>
+                                <button onclick="findThroughPost('@Url.Action("Searching", "Person")', 'inputId')">Search</button>
+                                <datalist id="cityList">
+                                    <option value=""></option>
+                                </datalist>
+                            </div>
+                        </div>
+                    </form>
+                </th>
+                <td>
+    <div id="PersonList" display="inine-flex" flex-direction="row">
+        @*<partial name="_PersonDetailView" model="Model" />*@
+    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div>
+    <partial name="_SearchResult" model="Model" />
+</div>

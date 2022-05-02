@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Add Temp";
+}
+
+<div>
+    <h1>Temperature Check</h1>
+    <hr />
+    <table class="contact">
+        <tr>
+            <th>Temperature</th>
+            <td>@ViewBag.Temp</td>
+        </tr>
+        <tr>
+            <th>Type</th>
+            <td>@ViewBag.TempType</td>
+        </tr>
+        <tr>
+            <th>Message</th>
+            <td>
+                @if (ViewBag.ExceptionMsg != null)
+                {
+                    <h3 class="danger">@ViewBag.ExceptionMsg</h3>
+                }
+             </td>
+        </tr>
+    </table>
+    <div class="show">
+        <h3>Add a Temperature</h3>
+        <hr />
+        <form asp-action="Create" method="post">
+            <label for="temp">Tempearture:</label>
+            <input type="number" name="temp" id="temp" min=30 max=100 step="0.1" required value="@ViewBag.Temp" />
+            <hr />
+            <label for="typeTemp">Fahrenheit</label>
+            <input type="radio" id="fe"  name="temp_type" value="fe">
+            <label for="typeTemp">Celcius</label>
+            <input type="radio" id="ce" name="temp_type" checked value="ce">
+            <hr />
+            <button type="submit">Submit Temperature</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Temperature - Index";
+}
+
+
+<div class="main-content">
+    <h1>Temperature Check</h1>
+    <hr />
+    <table class="contact">
+        <tr>
+            <th>Temperature</th>
+            <td>@ViewBag.Temp</td>
+        </tr>
+        <tr>
+            <th>Type</th>
+            <td>C or F</td>
+        </tr>
+        <tr>
+            <th>
+                @if (ViewBag.ExceptionMsg != null)
+                {
+                    <h4 class="danger">@ViewBag.ExceptionMsg</h4>
+                }
+                    </th>
+            <td>Normal or Fever</td>
+        </tr>
+    </table>
+</div>
