@@ -60,27 +60,21 @@ namespace WebAssignmentMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create(List<CreatePersonViewModel> person)
+        public IActionResult Create()
         {
             Person inPerson = new Person();
-            CreatePersonViewModel createPerson = new CreatePersonViewModel(inPerson);
-            createPerson.CityList = _memoryPeople.Getcities();
-            if (person.Count != 0)
-            {
-                List<Person> peopleSearch = _memoryPeople.All();
-                return PartialView("_SearchResult", peopleSearch);
-            }
-
-            return View(createPerson);
+            CreatePersonViewModel createPerson = new CreatePersonViewModel();
+//            createPerson.CityList = _memoryPeople.Getcities();
+            return View();
         }
 
         [HttpPost]
         public IActionResult Create(CreatePersonViewModel personViewModel)
         {
-
+            List<Person> returnPerson = new List<Person>();
             if (ModelState.IsValid)
             {
-                _peopleService.Add(personViewModel);
+                returnPerson = _peopleService.Add(personViewModel);
                 return RedirectToAction(nameof(Index));
             }
             return View();
