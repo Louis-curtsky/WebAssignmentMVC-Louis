@@ -10,8 +10,6 @@ namespace WebAssignmentMVC.Controllers
     public class PersonController : Controller
     {
         static bool Initialized;
-        Person Addperson = new Person();
-        List<Person> localStore = new List<Person>();
         private readonly IPeopleService _peopleService;
         IPeopleRepo _memoryPeople;
 
@@ -28,7 +26,6 @@ namespace WebAssignmentMVC.Controllers
         {
                         if (Initialized)
                         {
-                //                            return View(_memoryPeople.GetPersons(firstName, LastName, city, phone));
                             return View(_memoryPeople.All());
                         }
                         else
@@ -36,10 +33,6 @@ namespace WebAssignmentMVC.Controllers
                             Initialized = _memoryPeople.Initialize();
                             return View(_memoryPeople.All());
                         }
-            
-//            Initialized = _memoryPeople.Initialize();
-
- //           return View(_memoryPeople.All());
         }
 
         [HttpGet]
