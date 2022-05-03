@@ -22,16 +22,16 @@
             <tr>
                 <th>
                     <form asp-action="Searching" method="post">
-                        <div class="form-row">
-                            <div class="col">
+                        <div>
+                            <div>
                                 <label>First Name</label>
                                 <input name="FirstName" type="text" id="inputId" />
                             </div>
-                            <div class="col">
+                            <div>
                                 <label>Last Name</label>
                                 <input name="LastName" type="text" id="LastName" />
                             </div>
-                            <div class="col">
+                            <div>
                                 <Lable>City</Lable>
                                 <input name="City" type="text" id="City " list="cityList" />
                             </div>
@@ -46,7 +46,6 @@
                 </th>
                 <td>
     <div id="PersonList" display="inine-flex" flex-direction="row">
-        @*<partial name="_PersonDetailView" model="Model" />*@
     </div>
                 </td>
             </tr>

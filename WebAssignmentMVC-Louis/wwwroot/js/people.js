@@ -22,16 +22,6 @@ function findThroughPost(url, firstname, lastname, city) {
 };
 
 
-function addThroughPost(url, firstname, lastname, city, phone) {
-    let inputElement = $("#" + firstname + lastname + city + phone);
-    var data = {
-        [inputElement.attr("name")]: inputElement.val()
-    };
-    $.post(url, data, function (response) {
-        document.getElementById("PersonList").innerHTML = response;
-    })
-};
-
 
 function findThroughId(url, inputId) {
     let inputElement = $("#" + inputId);
