@@ -9,8 +9,8 @@ namespace WebAssignmentMVC.Models.Person
     {
         public bool Initialized = false;
         private static int idCounter;
-        private static List<Person> peopleStorage = new List<Person>();
-        private static List<string> cityStorage = new List<string>();
+        private static readonly List<Person> peopleStorage = new List<Person>();
+        private static readonly List<string> cityStorage = new List<string>();
 
 
         public bool Initialize()
@@ -131,10 +131,16 @@ namespace WebAssignmentMVC.Models.Person
             throw new NotImplementedException();
         }
 
-        public bool Delete(Person person)
+        public bool Delete(int id)
         {
-                return peopleStorage.Remove(person);
-
+            foreach (Person person in peopleStorage)
+            {
+                if (person.Id == id)
+                {
+                    return(peopleStorage.Remove(person));
+                }
+            }
+            return false;
         }
 
         public Person Read(int id)

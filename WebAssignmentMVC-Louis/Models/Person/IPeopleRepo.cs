@@ -18,6 +18,6 @@ namespace WebAssignmentMVC.Models.Person
 
         List<Person> Search(string firstName, string lastName, string city);
         Person Update(Person person);
-        bool Delete(Person person);
+        bool Delete(int id);
     }
 }

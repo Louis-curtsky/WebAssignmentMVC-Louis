@@ -7,16 +7,19 @@ namespace WebAssignmentMVC.Models.Person
 {
     public class PeopleService : IPeopleService
     {
- 
+
         IPeopleRepo _peopleRepo;
-        
+
         public PeopleService(IPeopleRepo peopleRepo)
         {
             _peopleRepo = peopleRepo;
-            
+
         }
 
-        public PeopleService() { }
+        public PeopleService()
+        {
+        }
+
         public List<Person> All()
         {
             IMemoryPeopleRepo storage = new IMemoryPeopleRepo(); 
@@ -38,15 +41,8 @@ namespace WebAssignmentMVC.Models.Person
 
         public bool Remove(int id)
         {
-            Person person = _peopleRepo.Read(id);
-            if (person == null)
-            {
-                return false;
-            }
-            else
-            {
-                return _peopleRepo.Delete(person);
-            }
+            IMemoryPeopleRepo getRemove = new IMemoryPeopleRepo();
+                return getRemove.Delete(id);
         }
 
         public List<Person> Add(CreatePersonViewModel personViewModel)

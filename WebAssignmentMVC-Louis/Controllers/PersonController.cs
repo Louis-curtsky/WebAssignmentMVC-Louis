@@ -26,12 +26,12 @@ namespace WebAssignmentMVC.Controllers
 
          if (Initialized)
             {
-                return View(_peopleService.All());
+                return View(_memoryPeople.All());
             }
          else
             {
                 Initialized = _memoryPeople.Initialize();
-                List<Person> returnView =  _peopleService.All();
+                List<Person> returnView =  _memoryPeople.All();
                 return View(returnView);
             }
         }
@@ -136,7 +136,7 @@ namespace WebAssignmentMVC.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-
+            List<Person> peopleList = new List<Person>();
             if (_peopleService.Remove(id))
             {
                 ViewBag.msg = "Person was removed.";
