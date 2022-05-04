@@ -20,19 +20,20 @@ namespace WebAssignmentMVC.Controllers
             
         }
         
-
         [HttpGet]
         public IActionResult Index()
         {
-                        if (Initialized)
-                        {
-                            return View(_memoryPeople.All());
-                        }
-                        else
-                        {
-                            Initialized = _memoryPeople.Initialize();
-                            return View(_memoryPeople.All());
-                        }
+
+         if (Initialized)
+            {
+                return View(_peopleService.All());
+            }
+         else
+            {
+                Initialized = _memoryPeople.Initialize();
+                List<Person> returnView =  _peopleService.All();
+                return View(returnView);
+            }
         }
 
         [HttpGet]
@@ -135,18 +136,14 @@ namespace WebAssignmentMVC.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            List<Person> searchPerson = _memoryPeople.GetByID(id);
 
-            if (searchPerson != null)
+            if (_peopleService.Remove(id))
             {
-                _memoryPeople.Delete(id);
-                return RedirectToAction(nameof(Index), new { 
-                    id = searchPerson[0].Id,
-                    firstName = searchPerson[0].FirstName, 
-                    lastName = searchPerson[0].LastName, 
-                    city = searchPerson[0].City, 
-                    phone = searchPerson[0].Phone 
-                });   
+                ViewBag.msg = "Person was removed.";
+            }
+            else
+            {
+                ViewBag.msg = "Unable to remove person with id: " + id;
             }
             return RedirectToAction(nameof(Index));
         }

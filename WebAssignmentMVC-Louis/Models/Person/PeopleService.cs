@@ -7,29 +7,20 @@ namespace WebAssignmentMVC.Models.Person
 {
     public class PeopleService : IPeopleService
     {
-        static List<Person> PeopleSearch = new List<Person>();
-        static List<Person> peopleStorage = new List<Person>();
-
+ 
         IPeopleRepo _peopleRepo;
-
-        IMemoryPeopleRepo _PeopleRepo;
         
-        public PeopleService()
+        public PeopleService(IPeopleRepo peopleRepo)
         {
-            if (_PeopleRepo == null) _PeopleRepo = new IMemoryPeopleRepo();
+            _peopleRepo = peopleRepo;
             
         }
 
-         PeopleService(IPeopleRepo peopleRepo)
-        {
-            _peopleRepo = peopleRepo;
-        }
-
-
+        public PeopleService() { }
         public List<Person> All()
         {
-            IMemoryPeopleRepo storage = new IMemoryPeopleRepo();
-            return _peopleRepo.Read();
+            IMemoryPeopleRepo storage = new IMemoryPeopleRepo(); 
+            return storage.All();
          }
 
         public bool Edit(int id, CreatePersonViewModel person)
@@ -47,12 +38,20 @@ namespace WebAssignmentMVC.Models.Person
 
         public bool Remove(int id)
         {
-            return _peopleRepo.Delete(id);
+            Person person = _peopleRepo.Read(id);
+            if (person == null)
+            {
+                return false;
+            }
+            else
+            {
+                return _peopleRepo.Delete(person);
+            }
         }
 
         public List<Person> Add(CreatePersonViewModel personViewModel)
         {
-            List<Person> resultList = _PeopleRepo.GetPersons(personViewModel.FirstName, personViewModel.LastName, personViewModel.City, personViewModel.Phone);
+            List<Person> resultList = _peopleRepo.GetPersons(personViewModel.FirstName, personViewModel.LastName, personViewModel.City, personViewModel.Phone);
             return resultList;
         }
     }

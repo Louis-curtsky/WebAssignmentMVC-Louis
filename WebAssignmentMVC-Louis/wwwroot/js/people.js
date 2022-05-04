@@ -34,3 +34,4 @@ function findThroughId(url, inputId) {
     })
 };
 
+//jQuery.post(url[, data][, success][, dataType])

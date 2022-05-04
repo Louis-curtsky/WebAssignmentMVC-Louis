@@ -15,22 +15,25 @@
         <a asp-action="FindPerson">Find by ID</a>
     </li>
 </ul>
-<p> </p>
+@if (ViewBag.msg != null)
+{
+    <h3>@ViewBag.msg</h3>
+}
 <table class="contact">
-  <tr>
-      <th>ID Number</th>
-     <th>First Name</th>
-     <th>Last Name</th>
-     <th>Telephone</th>
-     <th>City</th>
-  </tr>
-  <tbody>
-     @foreach (Person person in Model)
-     {
-      <tr>
-          <partial name="_PersonList" model="person" />
-      </tr>
-      }
-  </tbody>
+    <tr>
+        <th>ID Number</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Telephone</th>
+        <th>City</th>
+    </tr>
+    <tbody>
+        @foreach (Person person in Model)
+        {
+            <tr>
+                <partial name="_PersonList" model="person" />
+            </tr>
+        }
+    </tbody>
 </table>
 

@@ -131,23 +131,22 @@ namespace WebAssignmentMVC.Models.Person
             throw new NotImplementedException();
         }
 
-        public bool Delete(int id)
+        public bool Delete(Person person)
         {
- //           Initialize();
-            for (int i=0; i<peopleStorage.Count; i++)
-            {
-                if (peopleStorage[i].Id == id)
-                {
-                    peopleStorage.RemoveAt(i);
-                    return true;
-                }
-            }
-            return false;
+                return peopleStorage.Remove(person);
+
         }
 
-        public List<Person> Read()
+        public Person Read(int id)
         {
-            return peopleStorage;
+            foreach (Person person in peopleStorage)
+            {
+                if (person.Id == id)
+                {
+                    return person;
+                }
+            }
+            return null;
         }
     }
 }
