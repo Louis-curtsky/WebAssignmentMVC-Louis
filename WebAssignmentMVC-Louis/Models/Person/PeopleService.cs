@@ -42,12 +42,16 @@ namespace WebAssignmentMVC.Models.Person
         public bool Remove(int id)
         {
             IMemoryPeopleRepo getRemove = new IMemoryPeopleRepo();
-                return getRemove.Delete(id);
+            return getRemove.Delete(id);
         }
 
-        public List<Person> Add(CreatePersonViewModel personViewModel)
+        public List<Person> Add(Person personViewModel)
         {
-            List<Person> resultList = _peopleRepo.GetPersons(personViewModel.FirstName, personViewModel.LastName, personViewModel.City, personViewModel.Phone);
+
+            List<Person> resultList = _peopleRepo.GetPersons(
+                            personViewModel.FirstName, personViewModel.LastName,
+                            personViewModel.City, personViewModel.Phone);
+ 
             return resultList;
         }
     }

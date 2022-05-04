@@ -63,7 +63,7 @@ namespace WebAssignmentMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(CreatePersonViewModel personViewModel)
+        public IActionResult Create(Person personViewModel)
         {
             List<Person> returnPerson = new List<Person>();
             if (ModelState.IsValid)
@@ -137,7 +137,7 @@ namespace WebAssignmentMVC.Controllers
         public IActionResult Delete(int id)
         {
             List<Person> peopleList = new List<Person>();
-            if (_peopleService.Remove(id))
+            if (_memoryPeople.Delete(id))
             {
                 ViewBag.msg = "Person was removed.";
             }

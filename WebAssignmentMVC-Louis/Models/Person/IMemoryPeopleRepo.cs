@@ -12,6 +12,9 @@ namespace WebAssignmentMVC.Models.Person
         private static readonly List<Person> peopleStorage = new List<Person>();
         private static readonly List<string> cityStorage = new List<string>();
 
+        public IMemoryPeopleRepo()
+        {
+        }
 
         public bool Initialize()
         {
@@ -37,6 +40,7 @@ namespace WebAssignmentMVC.Models.Person
         {
             return peopleStorage;
         }
+
         public Person Create(string firstName, string lastName, string city, string phone)
         {
             Person person = new Person(++idCounter, firstName, lastName, city, phone);

@@ -15,10 +15,6 @@
         <a asp-action="FindPerson">Find by ID</a>
     </li>
 </ul>
-@if (ViewBag.msg != null)
-{
-    <h3>@ViewBag.msg</h3>
-}
 <table class="contact">
     <tr>
         <th>ID Number</th>
@@ -36,4 +32,8 @@
         }
     </tbody>
 </table>
+@if (ViewBag.msg != null)
+{
+    <h3>@ViewBag.msg</h3>
+}
 
