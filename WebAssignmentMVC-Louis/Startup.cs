@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -9,6 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAssignmentMVC.Models.Person;
+using WebAssignmentMVC.Models.Person.Data;
+using WebAssignmentMVC.Models.Person.Repo;
+using WebAssignmentMVC.Models.Person.Services;
 
 namespace WebAssignmentMVC
 {
@@ -20,20 +24,21 @@ namespace WebAssignmentMVC
         }
 
         public IConfiguration Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
-            // To allow Sessions and Cookies operations
 
-            services.AddDistributedMemoryCache();
+            services.AddDbContext<PersonDBContext>
+                (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromMinutes(5);
-                options.Cookie.HttpOnly = true;
-                options.Cookie.IsEssential = true;
-            });
-            //services.AddScoped<IPeopleService, PeopleService>();//Container setting for my IoC
-            //services.AddControllersWithViews(); //Will be used later maybe
+            services.AddScoped<IPeopleRepo, IMemoryPeopleRepo>();//Container setting for my IoC
+            services.AddScoped<IPeopleService, PeopleService>();//Container setting for my IoC
+
+            services.AddScoped<ICountryRepo, DbCountryRepo>();
+            services.AddScoped<ICountryService, CountryService>();
+
+            services.AddControllersWithViews(); 
+
             services.AddMvc().AddRazorRuntimeCompilation();
         }
 
@@ -44,35 +49,16 @@ namespace WebAssignmentMVC
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-
-            app.UseSession();
-
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "PeopleRoute",
-                    pattern: "/People/AddPerson",
-                    defaults: new { controller = "Person", action = "Create" }
-                    );
 
                 endpoints.MapControllerRoute(
-                    name: "PeopleRoute",
-                    pattern: "/People/SearchforPerson",
-                    defaults: new { controller = "Person", action = "FindPerson" }
-                    );
-
-                endpoints.MapControllerRoute(
-                    name: "PeopleRoute",
-                    pattern: "/People/FindThePerson",
-                    defaults: new { controller = "Person", action = "Searching" }
-                    );
-
-                endpoints.MapControllerRoute(
-                    name: "finalRoute",
+                    name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}"
                     );
 

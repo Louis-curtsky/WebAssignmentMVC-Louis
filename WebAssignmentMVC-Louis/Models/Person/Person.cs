@@ -8,32 +8,20 @@ namespace WebAssignmentMVC.Models.Person
 {
     public class Person
     {
-        public int Id { get; set; }
-
-        [Display(Name = "First Name")]
-        public string FirstName{ get; set; }
-
-        [Display(Name = "Last Name")]
-        public string LastName { get; set; }
-
-        [Display(Name = "City")]
-        public string City { get; set; }
-
-        [Display(Name = "Contact Number")]
-        public string Phone { get; set; }
         public Person()
         { }
+        [Key]
+        public int Id { get; set; }
 
-        public Person(string firstName, string lastName, string city, string phone)
-        {
-            FirstName=firstName;
-            LastName = lastName;
-            City = city;
-            Phone = phone;
-        }
-        public Person(int id, string firstName, string lastName, string city, string phone): this (firstName,lastName,city,phone)
-        {
-            Id = id;
-        }
+        public string FirstName{ get; set; }
+
+        public string LastName { get; set; }
+
+        public string Phone { get; set; }
+        public Country Country { get; set; }
+
+        public City City { get; set; }
+
+
     }
 }

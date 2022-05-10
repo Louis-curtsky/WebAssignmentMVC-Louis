@@ -9,22 +9,40 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
-    <header class="headerColumn">
-        <img id="logo" src="~/myLogo.jpg" />
-        <nav>
-            <ul class="headmenu">
-                <li class="listMenu"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                <li class="listMenu"><a asp-controller="Person" asp-action="Index">Person</a></li>
-            </ul>
-        </nav>
+    <header>
+        <div class="dropdown">
+            <button class="dropbtn" asp-controller="Person" asp-action="Index">Person</button>
+            <div class="dropdown-content" style="left:0;">
+                <a asp-controller="Person" asp-action="Create">Add</a>
+                <a asp-controller="Person" asp-action="Searching">Searching</a>
+                <a asp-controller="Person" asp-action="FindPerson">Find by ID</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn" asp-controller="Country" asp-action="Index">Country</button>
+            <div class="dropdown-content" style="left:0;">
+                <a asp-controller="Country" asp-action="Index">List All</a>
+                <a asp-controller="Country" asp-action="Create">Add</a>
+                <a asp-controller="Country" asp-action="FindByID">Find by ID</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn" asp-controller="Cities" asp-action="Index">City</button>
+            <div class="dropdown-content" style="left:0;">
+                <a asp-controller="Cities" asp-action="Index">List All</a>
+                <a asp-controller="Cities" asp-action="Create">Add</a>
+                <a asp-controller="Cities" asp-action="Edit">Edit</a>
+                <a asp-controller="Cities" asp-action="Delete">Delete</a>
+            </div>
+        </div>
     </header>
-    <div class="main-content">
+    <div>
         @RenderBody()
     </div>
-    <footer class="footer">
+    <footer class="border-top footer text-muted">
         <span>&copy; Louis Skogen</span>
     </footer>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/people.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)

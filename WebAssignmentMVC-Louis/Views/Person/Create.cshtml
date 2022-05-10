@@ -1,20 +1,9 @@
-﻿@model CreatePersonViewModel
+﻿@model WebAssignmentMVC.Models.Person.ViewModels.CreatePersonViewModel
 @{
     ViewData["Title"] = "Persons - Add new Person";
 }
 
 <h3>Add new Person</h3>
-<ul class="breadcrumb">
-    <li>
-        <a asp-action="Create">Add Person</a>
-    </li>
-    <li>
-        <a asp-action="Searching">Search Person</a>
-    </li>
-    <li>
-        <a asp-action="FindPerson">Find by ID</a>
-    </li>
-</ul>
 
 <div class="inform">
     <form asp-action="Create" method="post">
@@ -23,20 +12,23 @@
         <span asp-validation-for="FirstName"></span>
 
         <label asp-for="LastName"></label>
-        <input asp-for="LastName" id="LastName"/>
+        <input asp-for="LastName" id="LastName" />
         <span asp-validation-for="LastName"></span>
-
-        <label asp-for="City"></label>
-        <input asp-for="City" list="cityList" />
-        <span asp-validation-for="City"></span>
 
         <label asp-for="Phone"></label>
         <input asp-for="Phone" type="tel" />
         <span asp-validation-for="Phone"></span>
 
+        <label asp-for="Countries"></label>
+        <select asp-for="Countries" id="CountryID">
+
+        @foreach (Country country in Model.Countries)
+        {
+            <option value="@country.Id">@country.Cname</option>
+        }
+        </select>
+
         <button type="submit" class="button">Create Person</button>
-        <datalist id="cityList">
-       </datalist>
     </form>
 </div>
 <div class="col-2 " id="PersonList">

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebAssignmentMVC.Models.Person
+namespace WebAssignmentMVC.Models.Person.ViewModels
 {
     public class PersonViewModel
     {
@@ -12,7 +12,7 @@ namespace WebAssignmentMVC.Models.Person
 
         public string LastName { get; set; }
 
-        public string City { get; set; }
+        public int Cid { get; set; } // Country ID
 
         public string Phone { get; set; }
     }

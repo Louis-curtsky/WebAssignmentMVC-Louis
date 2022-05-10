@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAssignmentMVC.Models.Person.ViewModels;
 
 namespace WebAssignmentMVC.Models.Person
 {
     public interface IPeopleRepo
     {
-        bool Initialize();
+ //       bool Initialize();
         Person Read(int id);
 
         List<Person> All();
         List<PersonViewModel> GetList();
-        List<Person> GetPersons(string firstName, string lastName, string city, string phone);
-        List<string> Getcities();
-        List<Person> GetByID(int id);
+        Person Create(Person person);
+        
+        Person FindByID(int id);
 
-        List<Person> Search(string firstName, string lastName, string city);
+        List<Person> Search(string firstName, string lastName, int id);
         Person Update(Person person);
-        bool Delete(int id);
+        bool Delete(Person person);
     }
 }

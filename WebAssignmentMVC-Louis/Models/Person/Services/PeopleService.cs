@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAssignmentMVC.Models.Person.ViewModels;
 
 namespace WebAssignmentMVC.Models.Person
 {
@@ -16,14 +17,9 @@ namespace WebAssignmentMVC.Models.Person
 
         }
 
-        public PeopleService()
-        {
-        }
-
         public List<Person> All()
         {
-            IMemoryPeopleRepo storage = new IMemoryPeopleRepo(); 
-            return storage.All();
+            return _peopleRepo.All();
          }
 
         public bool Edit(int id, CreatePersonViewModel person)
@@ -33,26 +29,27 @@ namespace WebAssignmentMVC.Models.Person
 
         public Person FindById(int id)
         {
-            List<Person> getByID = _peopleRepo.GetByID(id);
-            Person returnFound = getByID[0];
+            Person returnFound = _peopleRepo.FindByID(id);
             return returnFound;
 
         }
 
         public bool Remove(int id)
         {
-            IMemoryPeopleRepo getRemove = new IMemoryPeopleRepo();
-            return getRemove.Delete(id);
+            Person person = _peopleRepo.Read(id);
+            if (person == null)
+                return false;
+            else
+            return _peopleRepo.Delete(person);
         }
 
-        public List<Person> Add(Person personViewModel)
+        public Person Add(Person personViewModel)
         {
 
-            List<Person> resultList = _peopleRepo.GetPersons(
-                            personViewModel.FirstName, personViewModel.LastName,
-                            personViewModel.City, personViewModel.Phone);
+            Person resultList = _peopleRepo.Create(personViewModel);
  
             return resultList;
         }
+
     }
 }

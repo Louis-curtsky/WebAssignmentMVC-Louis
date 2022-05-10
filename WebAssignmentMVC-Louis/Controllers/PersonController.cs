@@ -4,36 +4,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAssignmentMVC.Models.Person;
+using WebAssignmentMVC.Models.Person.Services;
+using WebAssignmentMVC.Models.Person.ViewModels;
 
 namespace WebAssignmentMVC.Controllers
 {
     public class PersonController : Controller
     {
-        static bool Initialized;
+        private readonly ICountryService _countryService;
         private readonly IPeopleService _peopleService;
-        IPeopleRepo _memoryPeople;
+        private readonly IPeopleRepo _memoryPeople;
 
-        public PersonController()
+        public PersonController(IPeopleService peopleService, ICountryService countryService, IPeopleRepo memoryPeople)
         {
-            _memoryPeople = new IMemoryPeopleRepo();
-            _peopleService = new PeopleService();
-            
+//            _memoryPeople = new IMemoryPeopleRepo();
+            _peopleService = peopleService;
+            _countryService = countryService;
+            _memoryPeople = memoryPeople;
         }
         
         [HttpGet]
         public IActionResult Index()
         {
-
-         if (Initialized)
-            {
-                return View(_memoryPeople.All());
-            }
-         else
-            {
-                Initialized = _memoryPeople.Initialize();
-                List<Person> returnView =  _memoryPeople.All();
-                return View(returnView);
-            }
+            return View(_peopleService.All());
         }
 
         [HttpGet]
@@ -41,14 +34,14 @@ namespace WebAssignmentMVC.Controllers
         {
             return View();
         }
-
+/*
         [HttpGet]
         public IActionResult GetCities()
         {
             return Json(_memoryPeople.Getcities());
         }
 
-        public IActionResult GetPersonList()
+*/        public IActionResult GetPersonList()
         {
             return PartialView("_PersonList", _memoryPeople.All());
         }
@@ -56,19 +49,17 @@ namespace WebAssignmentMVC.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            Person inPerson = new Person();
             CreatePersonViewModel createPerson = new CreatePersonViewModel();
-//            createPerson.CityList = _memoryPeople.Getcities();
-            return View();
+            createPerson.Countries = _countryService.GetAll();
+            return View(createPerson);
         }
 
         [HttpPost]
         public IActionResult Create(Person personViewModel)
         {
-            List<Person> returnPerson = new List<Person>();
             if (ModelState.IsValid)
             {
-                returnPerson = _peopleService.Add(personViewModel);
+                Person returnPerson = _peopleService.Add(personViewModel);
                 return RedirectToAction(nameof(Index));
             }
             return View();
@@ -78,7 +69,7 @@ namespace WebAssignmentMVC.Controllers
         [HttpGet]
         public IActionResult FindPerson(List<Person> searchResult)
         {
-            List<Person> searchPerson = _memoryPeople.All();
+            List<Person> searchPerson = _peopleService.All();
             if (searchResult.Count!=0)
             return PartialView("_PersonDetailView", searchResult);
             else
@@ -89,7 +80,7 @@ namespace WebAssignmentMVC.Controllers
 
         public IActionResult FindPerson(int id)
         {
-            List<Person>searchResult = _memoryPeople.GetByID(id);
+            Person searchResult = _peopleService.FindById(id);
             return View(searchResult);
         }
 
@@ -109,27 +100,36 @@ namespace WebAssignmentMVC.Controllers
         [HttpPost]
         public IActionResult Detail(int id)
         {
-            List<Person> searchResult = _memoryPeople.GetByID(id);
+            Person searchResult = _memoryPeople.FindByID(id);
             return PartialView ("_PersonDetailView",searchResult);
         }
 
         [HttpGet]
         public IActionResult Searching(List<Person> peopleSearch)
         {
-            List<Person> searchPerson = _memoryPeople.All();
-            if (peopleSearch.Count == 0)
+            List<Person> searchPerson = new List<Person>();
+            try
+            {
+                searchPerson = _memoryPeople.All();
+            }
+            catch
+            {
+                if (peopleSearch.Count == 0)
+                {
+                    ModelState.AddModelError("System", "Person List has no record!!!");
+                }
                 return View(searchPerson);
-            else
+            }
                return PartialView("_SearchResult",peopleSearch);
         }
 
         [HttpPost]
 
-        public IActionResult Searching(string firstName, string lastName, string city)
+        public IActionResult Searching(string firstName, string lastName, int cid)
         {
 //            firstName = "Louis";
             List<Person> peopleSearch = new List<Person>();
-            peopleSearch = _memoryPeople.Search(firstName, lastName, city);
+            peopleSearch = _memoryPeople.Search(firstName, lastName, cid);
             return View (peopleSearch);
         }
 
@@ -137,7 +137,7 @@ namespace WebAssignmentMVC.Controllers
         public IActionResult Delete(int id)
         {
             List<Person> peopleList = new List<Person>();
-            if (_memoryPeople.Delete(id))
+            if (_peopleService.Remove(id))
             {
                 ViewBag.msg = "Person was removed.";
             }

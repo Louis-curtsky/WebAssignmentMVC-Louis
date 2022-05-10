@@ -30,7 +30,6 @@
             <div class="col">
                 <p>
                     <a class="btn btn-info" asp-action="Delete" asp-controller="Person" asp-route-id="@Model[i].Id">Delete</a>
-                    @*<a class="btn btn-info" asp-action="Detail" asp-controller="Person" asp-route-id="@Model[i].Id">Details</a>*@
                     <input name="ID" type="hidden" id="inputId" value="@Model[i].Id" />
                     <button onclick="findThroughId('@Url.Action("Detail", "Person", new {id=Model[i].Id})', 'inputId')">Detail</button>
                 </p>

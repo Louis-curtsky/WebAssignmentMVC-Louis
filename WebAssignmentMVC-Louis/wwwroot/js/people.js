@@ -1,12 +1,12 @@
-﻿$(document).ready(function () {
-    $.get("/Person/GetCities", function (response) {
+﻿
+$(document).ready(function () {
+    $.get("Country/GetCountries", function (response) {
         console.log(response);
-        $('#cityList').empty();
-        response.map(city =>
-            $('#cityList').append($('<option/>', {
-                value: city,
-                text: city
-                
+        $('#countrtList').empty();
+        response.map(country => 
+            $('countrtList').append($('<option/>', {
+                value: country,
+                text: country
             })))
     })
 });
