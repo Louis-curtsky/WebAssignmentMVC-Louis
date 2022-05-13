@@ -58,15 +58,10 @@ namespace WebAssignmentMVC.Models.Person.Services
             Country countryFound = _countryRepo.FindById(id);
             return countryFound;
         }
-        public string Edit(int id, CreateCountryViewModel editCountry)
+        public Country Edit(int id, CreateCountryViewModel editCountry)
         {
-            Country orginalCountry = FindById(id);
-            if (orginalCountry == null)
-            {
-                return "Null Value detected!!!";
-            }
-            orginalCountry.Cname = editCountry.CountryName;
-            return _countryRepo.Update(orginalCountry);
+            Country editedCountry = new Country() { Id = id, Cname = editCountry.CountryName };
+            return _countryRepo.Update(editedCountry);
         }
 
         public bool Remove(int id)

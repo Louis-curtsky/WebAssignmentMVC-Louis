@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebAssignmentMVC.Models.Person
 {
@@ -18,10 +19,14 @@ namespace WebAssignmentMVC.Models.Person
         public string LastName { get; set; }
 
         public string Phone { get; set; }
-        public Country Country { get; set; }
+        [ForeignKey("CtyId")]
+        public int CtyId { get; set; }
 
-        public City City { get; set; }
+        public List<City> City { get; set; }
 
 
+        [ForeignKey("CountryId")]
+        public int CountryId { get; set; }
+        public List<Country> Country { get; set; }
     }
 }

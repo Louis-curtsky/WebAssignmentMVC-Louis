@@ -35,16 +35,18 @@ namespace WebAssignmentMVC.Models.Person.Repo
 
         public List<Country> GetAll()
         {
-            List<Country> countryList = _personDBContext.Countries.ToList();
-            return countryList;
+           return (_personDBContext.Countries.ToList());
         }
 
      
-        public string Update(Country country)
+        public Country Update(Country country)
         {
             _personDBContext.Countries.Update(country);
-            int returnValue = _personDBContext.SaveChanges();
-            return returnValue == 1 ? "User profile has been updated successfully" : "Unable to update";
+            if (_personDBContext.SaveChanges() > 0)
+            {
+                return country;
+            }
+            return null;
         }
     } // End of Public Class
 } // End of NameSpace 

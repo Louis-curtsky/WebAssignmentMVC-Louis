@@ -37,7 +37,7 @@ namespace WebAssignmentMVC.Models.Person
                 PersonViewModel personViewModel = new PersonViewModel();
                 personViewModel.FirstName = person.FirstName;
                 personViewModel.LastName = person.LastName;
-                personViewModel.Cid = person.Country.Id;   
+                personViewModel.Country = person.Country;   
                 personViewModel.Phone = person.Phone;   
             }
             return personViewModels;
@@ -63,10 +63,6 @@ namespace WebAssignmentMVC.Models.Person
                 }
                 else
                 if (person.LastName==lastName)
-                {
-                    searchPerson.Add(person);
-                }
-                else if (person.Country.Id == id)
                 {
                     searchPerson.Add(person);
                 }

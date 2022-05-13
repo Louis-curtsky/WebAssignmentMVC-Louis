@@ -11,7 +11,7 @@ namespace WebAssignmentMVC.Models.Person.Repo
         List<Country> GetAll();
         Country FindById(int id);
 
-        string Update(Country country);
+        Country Update(Country country);
         bool Delete(Country country);
 
     }

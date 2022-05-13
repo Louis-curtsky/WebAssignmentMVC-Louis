@@ -37,6 +37,9 @@ namespace WebAssignmentMVC
             services.AddScoped<ICountryRepo, DbCountryRepo>();
             services.AddScoped<ICountryService, CountryService>();
 
+            services.AddScoped<ICityRepo, DbCityRepo>();
+            services.AddScoped<ICityService, CityService>();
+
             services.AddControllersWithViews(); 
 
             services.AddMvc().AddRazorRuntimeCompilation();

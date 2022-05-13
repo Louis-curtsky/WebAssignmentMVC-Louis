@@ -10,7 +10,7 @@ using WebAssignmentMVC.Models.Person.Data;
 namespace WebAssignmentMVC.Migrations
 {
     [DbContext(typeof(PersonDBContext))]
-    [Migration("20220506140010_InitialCreate")]
+    [Migration("20220513101815_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,10 +28,20 @@ namespace WebAssignmentMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CountryFiD")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("PersonId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CountryFiD");
+
+                    b.HasIndex("PersonId");
 
                     b.ToTable("Cities");
                 });
@@ -46,7 +56,12 @@ namespace WebAssignmentMVC.Migrations
                     b.Property<string>("Cname")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("PersonId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PersonId");
 
                     b.ToTable("Countries");
                 });
@@ -58,10 +73,10 @@ namespace WebAssignmentMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CityId")
+                    b.Property<int>("CountryId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CountryId")
+                    b.Property<int>("CtyId")
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
@@ -75,22 +90,27 @@ namespace WebAssignmentMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId");
-
-                    b.HasIndex("CountryId");
-
                     b.ToTable("Persons");
                 });
 
-            modelBuilder.Entity("WebAssignmentMVC.Models.Person.Person", b =>
+            modelBuilder.Entity("WebAssignmentMVC.Models.Person.City", b =>
                 {
-                    b.HasOne("WebAssignmentMVC.Models.Person.City", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId");
+                    b.HasOne("WebAssignmentMVC.Models.Person.Country", "Countries")
+                        .WithMany("Cities")
+                        .HasForeignKey("CountryFiD")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("WebAssignmentMVC.Models.Person.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId");
+                    b.HasOne("WebAssignmentMVC.Models.Person.Person", null)
+                        .WithMany("City")
+                        .HasForeignKey("PersonId");
+                });
+
+            modelBuilder.Entity("WebAssignmentMVC.Models.Person.Country", b =>
+                {
+                    b.HasOne("WebAssignmentMVC.Models.Person.Person", null)
+                        .WithMany("Country")
+                        .HasForeignKey("PersonId");
                 });
 #pragma warning restore 612, 618
         }

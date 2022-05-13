@@ -12,7 +12,7 @@ namespace WebAssignmentMVC.Models.Person.ViewModels
 
         public string LastName { get; set; }
 
-        public int Cid { get; set; } // Country ID
+        public List<Country>Country { get; set; } // Link using Country ID
 
         public string Phone { get; set; }
     }

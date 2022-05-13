@@ -7,45 +7,36 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebAssignmentMVC.Models.Person;
 using WebAssignmentMVC.Models.Person.Data;
+using WebAssignmentMVC.Models.Person.Services;
 
 namespace WebAssignmentMVC.Controllers
 {
     public class CitiesController : Controller
     {
-        private readonly PersonDBContext _context;
+        private readonly ICityService _cityService;
 
-        public CitiesController(PersonDBContext context)
+        public CitiesController(ICityService cityService)
         {
-            _context = context;
+            _cityService = cityService;
         }
 
         // GET: Cities
-        public async Task<IActionResult> Index()
+        public ActionResult Index()
         {
-            return View(await _context.Cities.ToListAsync());
+            return View(_cityService.GetAll());
         }
 
         // GET: Cities/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var city = await _context.Cities
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (city == null)
-            {
-                return NotFound();
-            }
-
-            return View(city);
+            return View();
         }
 
         // GET: Cities/Create
         public IActionResult Create()
         {
+
+            //Pending
             return View();
         }
 
@@ -54,31 +45,32 @@ namespace WebAssignmentMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,CountryID")] City city)
+        public ActionResult Create(City city)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(city);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+               City cityView = _cityService.Create(city);
+                if (cityView != null)
+                {
+                  return RedirectToAction(nameof(Index));
+                }
+                ModelState.AddModelError("System", "Fail to Create City!!!");
             }
             return View(city);
         }
 
         // GET: Cities/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            City city = _cityService.FindById(id);
 
-            var city = await _context.Cities.FindAsync(id);
             if (city == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
-            return View(city);
+
+            ViewBag.id = id;
+            return View(new CreateCityViewModel(city));
         }
 
         // POST: Cities/Edit/5
@@ -86,68 +78,41 @@ namespace WebAssignmentMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CountryID")] City city)
+        public IActionResult Edit(int id, City city)
         {
-            if (id != city.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                try
+                if (_cityService.Edit(city) == true)
                 {
-                    _context.Update(city);
-                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CityExists(city.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                ModelState.AddModelError("System", "Fail to edit City!!!");
             }
+            ViewBag.id = id;
             return View(city);
         }
 
         // GET: Cities/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int id)
         {
-            if (id == null)
+            City city = _cityService.FindById(id);
+
+            if (city != null)
             {
-                return NotFound();
+                if (_cityService.Remove(city))
+                    return RedirectToAction(nameof(Index));
+                else
+                {
+                    ModelState.AddModelError("System", "Fail to create country!!!");
+                }
             }
-
-            var city = await _context.Cities
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (city == null)
-            {
-                return NotFound();
-            }
-
-            return View(city);
-        }
-
-        // POST: Cities/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var city = await _context.Cities.FindAsync(id);
-            _context.Cities.Remove(city);
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CityExists(int id)
+        public IActionResult GetCities()
         {
-            return _context.Cities.Any(e => e.Id == id);
+            return Json(_cityService.GetAll());
         }
+
     }
 }
