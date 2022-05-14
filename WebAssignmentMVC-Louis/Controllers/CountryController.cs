@@ -55,26 +55,42 @@ namespace WebAssignmentMVC.Controllers
         // GET: CountryController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Country country = _countryService.FindById(id);
+
+            if (country == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            CreateCountryViewModel editCountry = new CreateCountryViewModel()
+            {
+                CountryName = country.Cname
+            };
+
+            ViewBag.id = id;
+
+            return View(editCountry);
         }
 
         // POST: CountryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public IActionResult Edit(int id, CreateCountryViewModel country)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                if (_countryService.Edit(id, country) != null)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                ModelState.AddModelError("System", "Fail to edit City!!!");
             }
-            catch
-            {
-                return View();
-            }
+            ViewBag.id = id;
+            return View(country);
         }
 
         // GET: CountryController/Delete/5
-        public ActionResult Delete(int id)
+            public ActionResult Delete(int id)
         {
             Country country = _countryService.FindById(id);
 

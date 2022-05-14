@@ -8,16 +8,19 @@ using Microsoft.EntityFrameworkCore;
 using WebAssignmentMVC.Models.Person;
 using WebAssignmentMVC.Models.Person.Data;
 using WebAssignmentMVC.Models.Person.Services;
+using WebAssignmentMVC.Models.Person.ViewModels;
 
 namespace WebAssignmentMVC.Controllers
 {
     public class CitiesController : Controller
     {
         private readonly ICityService _cityService;
+        private readonly ICountryService _countryService;
 
-        public CitiesController(ICityService cityService)
+        public CitiesController(ICityService cityService, ICountryService countryService)
         {
             _cityService = cityService;
+            _countryService = countryService;
         }
 
         // GET: Cities
@@ -35,9 +38,9 @@ namespace WebAssignmentMVC.Controllers
         // GET: Cities/Create
         public IActionResult Create()
         {
-
-            //Pending
-            return View();
+           CreateCityViewModel model = new CreateCityViewModel();
+            model.CountryList = _countryService.GetAll();
+            return View(model);
         }
 
         // POST: Cities/Create
@@ -45,18 +48,19 @@ namespace WebAssignmentMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(City city)
+        public ActionResult Create(CreateCityViewModel createCity)
         {
             if (ModelState.IsValid)
             {
-               City cityView = _cityService.Create(city);
+               City cityView = _cityService.Create(createCity);
                 if (cityView != null)
                 {
                   return RedirectToAction(nameof(Index));
                 }
                 ModelState.AddModelError("System", "Fail to Create City!!!");
             }
-            return View(city);
+            createCity.CountryList = _countryService.GetAll();
+            return View(createCity);
         }
 
         // GET: Cities/Edit/5
@@ -69,8 +73,15 @@ namespace WebAssignmentMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            CreateCityViewModel editCity = new CreateCityViewModel()
+            {
+                CName = city.Name
+            };
+            editCity.CountryList = _countryService.GetAll();
+
             ViewBag.id = id;
-            return View(new CreateCityViewModel(city));
+
+            return View(editCity);
         }
 
         // POST: Cities/Edit/5

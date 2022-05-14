@@ -33,24 +33,27 @@ namespace WebAssignmentMVC.Models.Person.Data
                 .HasForeignKey(dtk => dtk.CountryFiD);
 
 
-/*            modelBuilder.Entity<City>().HasData(
-                new City() { Id = 1, Name = "Stockholm"},
-                new City() { Id = 2, Name = "Helsingborg"},
-                new City() { Id = 3, Name = "Växjö"},
-                new City() { Id = 4, Name = "Gävle"},
-                new City() { Id = 5, Name = "Trollhättan"},
-                new City() { Id = 6, Name = "Berlin"},
-                new City() { Id = 7, Name = "Hamburg"},
-                new City() { Id = 8, Name = "Munich"}
+            modelBuilder.Entity<City>().HasData(
+                new City() { Id = 1, Name = "Stockholm", CountryFiD=1},
+                new City() { Id = 2, Name = "Helsingborg", CountryFiD = 1 },
+                new City() { Id = 3, Name = "Växjö", CountryFiD = 1 },
+                new City() { Id = 4, Name = "Gävle", CountryFiD = 1 },
+                new City() { Id = 5, Name = "Trollhättan", CountryFiD = 1 },
+                new City() { Id = 6, Name = "Berlin", CountryFiD = 3 },
+                new City() { Id = 7, Name = "Hamburg", CountryFiD = 3 },
+                new City() { Id = 8, Name = "Munich", CountryFiD = 3 }
                 );
-
+/*
             modelBuilder.Entity<Country>().HasData(
                 new Country() { Id = 1, Cname = "Sweden"  },
-                new Country() { Id = 2, Cname = "Germany" }
+                new Country() { Id = 3, Cname = "Germany" }
                 );
-*/
-
+*/            
             #endregion
+
+            #region Person Languag Join
+
+            #endregion of Person Language Join
         }
 
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebAssignmentMVC.Controllers;
 using WebAssignmentMVC.Models.Person.Repo;
+using WebAssignmentMVC.Models.Person.ViewModels;
 
 namespace WebAssignmentMVC.Models.Person.Services
 {
@@ -15,9 +16,18 @@ namespace WebAssignmentMVC.Models.Person.Services
         {
             _cityRepo = cityRepo;
         }
-        public City Create(City createCity)
+        public City Create(CreateCityViewModel createCity)
         {
-            return _cityRepo.Create(createCity);
+            if (string.IsNullOrWhiteSpace(createCity.CName))
+            {
+                throw new ArgumentException("City Name with backspace(s)/whitespace(s) is not permited!!!");
+            }
+            City city = new City()
+            {
+                Name = createCity.CName,
+                CountryFiD = createCity.Cnty.Id
+        };
+            return _cityRepo.Create(city);
         }
 
         public bool Edit(City city)

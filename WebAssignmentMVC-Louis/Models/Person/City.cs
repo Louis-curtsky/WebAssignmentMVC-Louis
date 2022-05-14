@@ -20,6 +20,5 @@ namespace WebAssignmentMVC.Models.Person
         [ForeignKey("CountryFiD")]
         public int CountryFiD { get; set; }
         public Country Countries { get; set; }
- //       public List<Person> Persons {get; set;}
     }
 }

@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAssignmentMVC.Controllers;
 using WebAssignmentMVC.Models.Person.Data;
+using WebAssignmentMVC.Models.Person.ViewModels;
 
 namespace WebAssignmentMVC.Models.Person.Repo
 {
@@ -39,7 +41,7 @@ namespace WebAssignmentMVC.Models.Person.Repo
 
         public List<City> GetAll()
         {
-            List<City> cityList = _personDBContext.Cities.ToList();
+            List<City> cityList = _personDBContext.Cities.Include(city=> city.Countries).ToList();
             return cityList;
         }
 

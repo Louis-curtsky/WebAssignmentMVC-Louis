@@ -11,11 +11,14 @@ namespace WebAssignmentMVC.Models.Person.ViewModels
         [Required]
         [Display(Name = "City")]
         public String CName { get; set; }
-        public Country CLink { get; set; }
 
-        public CreateCityViewModel() { }
+        [Required]
+        [Display(Name = "Country")]
+        public int CnId { get; set; }
+        public Country Cnty { get; set; }
+        public List<Country> CountryList { get; set;}
 
-        public CreateCityViewModel(City city)
+        public CreateCityViewModel()
         {
         }
     }

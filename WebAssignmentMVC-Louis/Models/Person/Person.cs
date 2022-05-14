@@ -19,13 +19,10 @@ namespace WebAssignmentMVC.Models.Person
         public string LastName { get; set; }
 
         public string Phone { get; set; }
-        [ForeignKey("CtyId")]
         public int CtyId { get; set; }
 
         public List<City> City { get; set; }
 
-
-        [ForeignKey("CountryId")]
         public int CountryId { get; set; }
         public List<Country> Country { get; set; }
     }
