@@ -1,4 +1,4 @@
-﻿@model List<Person>
+﻿@model WebAssignmentMVC.Models.Person.ViewModels.PersonViewModel
 @{
     ViewData["Title"] = "Persons - Find Person";
 }
@@ -21,14 +21,15 @@
                                 <input name="LastName" type="text" id="LastName" />
                             </div>
                             <div>
-                                <Lable>City</Lable>
-                                <input name="City" type="text" id="City " list="cityList" />
+                                <label>Country</label>
+                                <input name="CountryId" type="number" id="CountryId"/>
+                            </div>
+                            <div>
+                                <label>City</label>
+                                <input name="CityId" type="number" id="cityId"/>
                             </div>
                             <div>
                                 <button onclick="findThroughPost('@Url.Action("Searching", "Person")', 'inputId')">Search</button>
-                                <datalist id="cityList">
-                                    <option value=""></option>
-                                </datalist>
                             </div>
                         </div>
                     </form>

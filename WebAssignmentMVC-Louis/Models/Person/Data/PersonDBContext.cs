@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebAssignmentMVC.Models;
 using WebAssignmentMVC.Models.Identity;
+using WebAssignmentMVC.Models.Person;
 
 namespace WebAssignmentMVC.Models.Person.Data
 {
@@ -89,6 +90,8 @@ namespace WebAssignmentMVC.Models.Person.Data
 
             #endregion of Person Language Join
         }
+
+        public DbSet<WebAssignmentMVC.Models.Person.PersonLanguage> PersonLanguage { get; set; }
 
 
     }

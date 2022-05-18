@@ -37,17 +37,7 @@ namespace WebAssignmentMVC.Controllers
         {
             return View();
         }
-/*
-        [HttpGet]
-        public IActionResult GetCities()
-        {
-            return Json(_memoryPeople.Getcities());
-        }
 
-*/        public IActionResult GetPersonList()
-        {
-            return PartialView("_PersonList", _peopleService.All());
-        }
 
         [HttpGet]
         public IActionResult Create()
@@ -112,6 +102,7 @@ namespace WebAssignmentMVC.Controllers
         public IActionResult Detail(int id)
         {
             Person searchResult = _peopleService.FindById(id);
+
             PersonViewModel showResult = new PersonViewModel()
             {
                 FirstName = searchResult.FirstName,
@@ -125,22 +116,35 @@ namespace WebAssignmentMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Searching(List<Person> peopleSearch)
+        public IActionResult Searching()
         {
-            List<Person> searchPerson = new List<Person>();
+            PersonViewModel searchPerson = new PersonViewModel();
+
+            List<Person> listPerson = new List<Person>();
             try
             {
-                searchPerson = _memoryPeople.All();
+                listPerson = _peopleService.All();
             }
             catch
             {
-                if (peopleSearch.Count == 0)
+                if (listPerson.Count == 0)
                 {
                     ModelState.AddModelError("System", "Person List has no record!!!");
                 }
-                return View(searchPerson);
+                foreach (Person person in listPerson)
+                {
+                    searchPerson.Id = person.Id;
+                    searchPerson.FirstName = person.FirstName;
+                    searchPerson.LastName = person.LastName;
+                    searchPerson.Phone = person.Phone;
+                    searchPerson.CountryId = person.Country.Id;
+                    searchPerson.Country = person.Country.Cname;
+                    searchPerson.CityId = person.CtyId;
+                    searchPerson.Language = person.languageSpoken;
+                 };
+                return PartialView("_searchResult",searchPerson);
             }
-               return PartialView("_SearchResult",peopleSearch);
+               return View();
         }
 
         [HttpPost]
@@ -168,9 +172,17 @@ namespace WebAssignmentMVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult GetCountries()
+        //-------------Ajax
+        public IActionResult AjaxPersonList()
         {
-            return Json(_countryService.GetAll());
+            List<Person> persons = _peopleService.All();
+
+            if (persons != null)
+            {
+                return PartialView("_PersonList", persons);
+            }
+
+            return NotFound();
         }
     }
 }

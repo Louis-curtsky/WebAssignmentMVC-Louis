@@ -1,6 +1,6 @@
 ﻿
 $(document).ready(function () {
-    $.get("Person/GetCountries", function (response) {
+    $.get("Country/GetCountries", function (response) {
         $('#countryList').empty();
         console.log(response);
         response.map(country => 
@@ -11,8 +11,8 @@ $(document).ready(function () {
     })
 });
 
-function findThroughPost(url, firstname, lastname, city) {
-    let inputElement = $("#" + firstname + lastname + city);
+function findThroughPost(url, firstname, lastname, countryId, cityId) {
+    let inputElement = $("#" + firstname + lastname + countryId + cityId);
     var data = {
         [inputElement.attr("name")]: inputElement.val()
     };
@@ -20,7 +20,6 @@ function findThroughPost(url, firstname, lastname, city) {
         document.getElementById("PersonList").innerHTML = response;
     })
 };
-
 
 
 function findThroughId(url, inputId) {
@@ -33,5 +32,6 @@ function findThroughId(url, inputId) {
         document.getElementById("PersonList").innerHTML = response;
     })
 };
+
 
 //jQuery.post(url[, data][, success][, dataType])

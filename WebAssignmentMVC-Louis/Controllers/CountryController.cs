@@ -106,5 +106,9 @@ namespace WebAssignmentMVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult GetCountries()
+        {
+            return Json(_countryService.GetAll());
+        }
     }
 }
