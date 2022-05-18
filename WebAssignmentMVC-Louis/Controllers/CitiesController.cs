@@ -66,7 +66,7 @@ namespace WebAssignmentMVC.Controllers
         // GET: Cities/Edit/5
         public ActionResult Edit(int id)
         {
-            City city = _cityService.FindById(id);
+            string city = _cityService.FindById(id);
 
             if (city == null)
             {
@@ -75,7 +75,7 @@ namespace WebAssignmentMVC.Controllers
 
             CreateCityViewModel editCity = new CreateCityViewModel()
             {
-                CName = city.Name
+                CName = city
             };
             editCity.CountryList = _countryService.GetAll();
 
@@ -106,10 +106,10 @@ namespace WebAssignmentMVC.Controllers
         // GET: Cities/Delete/5
         public IActionResult Delete(int id)
         {
-            City city = _cityService.FindById(id);
 
-            if (city != null)
+            if (_cityService.FindById(id) != null)
             {
+                City city = _cityService.GetCity(id);
                 if (_cityService.Remove(city))
                     return RedirectToAction(nameof(Index));
                 else

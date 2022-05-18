@@ -13,9 +13,17 @@
         <div class="dropdown">
             <button class="dropbtn" asp-controller="Person" asp-action="Index">Person</button>
             <div class="dropdown-content" style="left:0;">
+                <a asp-controller="Person" asp-action="Index">List</a>
                 <a asp-controller="Person" asp-action="Create">Add</a>
                 <a asp-controller="Person" asp-action="Searching">Searching</a>
                 <a asp-controller="Person" asp-action="FindPerson">Find by ID</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn" asp-controller="Language" asp-action="Index">Language</button>
+            <div class="dropdown-content" style="left:0;">
+                <a asp-controller="Language" asp-action="Index">List All</a>
+                <a asp-controller="Language" asp-action="Create">Add</a>
             </div>
         </div>
         <div class="dropdown">
@@ -23,6 +31,7 @@
             <div class="dropdown-content" style="left:0;">
                 <a asp-controller="Country" asp-action="Index">List All</a>
                 <a asp-controller="Country" asp-action="Create">Add</a>
+                <a asp-controller="Country" asp-action="GetCountries">Test GetC</a>
             </div>
         </div>
         <div class="dropdown">

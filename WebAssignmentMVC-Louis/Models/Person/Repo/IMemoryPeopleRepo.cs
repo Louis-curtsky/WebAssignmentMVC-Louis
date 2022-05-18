@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using WebAssignmentMVC.Models.Person.Data;
 using WebAssignmentMVC.Models.Person;
 using WebAssignmentMVC.Models.Person.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebAssignmentMVC.Models.Person
 {
@@ -19,7 +20,10 @@ namespace WebAssignmentMVC.Models.Person
 
         public List<Person> All()
         {
-            return _personDbContext.Persons.ToList();  
+            return _personDbContext.Persons
+                .Include(person=>person.Country)
+                .Include(person=> person.languageSpoken)
+                .ToList();  
         }
 
         public Person Create(Person person)
@@ -27,20 +31,6 @@ namespace WebAssignmentMVC.Models.Person
             _personDbContext.Add(person);
             _personDbContext.SaveChanges();
                 return person;
-        }
-
-        public List<PersonViewModel> GetList()
-        {
-            List<PersonViewModel> personViewModels = new List<PersonViewModel>();
-            foreach (Person person in _personDbContext.Persons)
-            {
-                PersonViewModel personViewModel = new PersonViewModel();
-                personViewModel.FirstName = person.FirstName;
-                personViewModel.LastName = person.LastName;
-                personViewModel.Country = person.Country;   
-                personViewModel.Phone = person.Phone;   
-            }
-            return personViewModels;
         }
 
 
@@ -75,8 +65,10 @@ namespace WebAssignmentMVC.Models.Person
 
         public Person FindByID(int id)
         {
-            return _personDbContext.Persons.SingleOrDefault(person => person.Id == id);
-  
+            return _personDbContext.Persons
+                .Include(person=>person.Country)
+                .Include(person=>person.languageSpoken)
+                .SingleOrDefault(person => person.Id == id);
         }
 
 

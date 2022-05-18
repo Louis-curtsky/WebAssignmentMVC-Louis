@@ -11,7 +11,8 @@ namespace WebAssignmentMVC.Models.Person.Services
     {
         City Create(CreateCityViewModel createCity);
         bool Edit(City city);
-        City FindById(int id);
+        string FindById(int id);
+        public City GetCity(int id);
         List<City> GetAll();
 
         bool Remove(City city);

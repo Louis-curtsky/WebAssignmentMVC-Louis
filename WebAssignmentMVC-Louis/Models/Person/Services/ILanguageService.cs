@@ -6,13 +6,13 @@ using WebAssignmentMVC.Models.Person.ViewModels;
 
 namespace WebAssignmentMVC.Models.Person.Services
 {
-    public interface ICountryService
+    public interface ILanguageService
     {
-        Country Create(CreateCountryViewModel country);
-        List<Country> GetAll();
-        string FindById(int id);
+        Language Create(CreateLanguageViewModel language);
+        List<Language> GetAll();
+        Language FindById(int id);
 
-        Country Edit(int id, CreateCountryViewModel editountry);
+        Language Edit(int id, CreateLanguageViewModel editlanguage);
         bool Remove(int id);
     }
 }

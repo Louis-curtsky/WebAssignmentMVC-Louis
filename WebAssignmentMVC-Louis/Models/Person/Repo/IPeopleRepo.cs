@@ -12,7 +12,6 @@ namespace WebAssignmentMVC.Models.Person
         Person Read(int id);
 
         List<Person> All();
-        List<PersonViewModel> GetList();
         Person Create(Person person);
         
         Person FindByID(int id);

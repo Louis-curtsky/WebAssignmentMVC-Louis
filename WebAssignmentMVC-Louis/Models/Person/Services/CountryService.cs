@@ -34,28 +34,10 @@ namespace WebAssignmentMVC.Models.Person.Services
             return _countryRepo.GetAll();
         }
 
-        public List<Country> Search(string search)
-        {
-            List<Country> searchCountry = _countryRepo.GetAll();
-            //
-            foreach (Country item in _countryRepo.GetAll())
-            {
-                if (item.Cname.Contains(search, StringComparison.OrdinalIgnoreCase))
-                {
-                    searchCountry.Add(item);
-                }
-            }
-            //searchPerson = searchPerson.Where(p => p.Name.ToUpper().Contains(search.ToUpper()) || p.City.Contains(search.ToUpper())).ToList();
-            if (searchCountry.Count == 0)
-            {
-                throw new ArgumentException("Could not find what you where looking for");
-            }
-            return searchCountry;
-        }
 
-        public Country FindById(int id)
+        public string FindById(int id)
         {
-            Country countryFound = _countryRepo.FindById(id);
+            string countryFound = _countryRepo.FindById(id);
             return countryFound;
         }
         public Country Edit(int id, CreateCountryViewModel editCountry)
@@ -66,9 +48,11 @@ namespace WebAssignmentMVC.Models.Person.Services
 
         public bool Remove(int id)
         {
-            Country country = _countryRepo.FindById(id);
-            if (country != null)
+            if (_countryRepo.FindById(id) != null)
+            {
+                Country country = _countryRepo.GetCountry(id);
                 return _countryRepo.Delete(country);
+            }
             else
                 return false;
         }

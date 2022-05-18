@@ -34,7 +34,13 @@ namespace WebAssignmentMVC.Models.Person.Repo
                 return false;
         }
 
-        public City FindById(int id)
+        public string FindById(int id)
+        {
+            City cityFound = _personDBContext.Cities.Find(id);
+            return cityFound.Name;
+        }
+
+        public City GetCity(int id)
         {
             return _personDBContext.Cities.Find(id);
         }

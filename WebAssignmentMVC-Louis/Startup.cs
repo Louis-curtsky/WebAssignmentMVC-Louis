@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAssignmentMVC.Models.Identity;
 using WebAssignmentMVC.Models.Person;
 using WebAssignmentMVC.Models.Person.Data;
 using WebAssignmentMVC.Models.Person.Repo;
@@ -40,9 +42,16 @@ namespace WebAssignmentMVC
             services.AddScoped<ICityRepo, DbCityRepo>();
             services.AddScoped<ICityService, CityService>();
 
+            services.AddScoped<ILanguageRepo, DbLanguageRepo>();
+            services.AddScoped<ILanguageService, LanguageService>();
+
             services.AddControllersWithViews(); 
 
             services.AddMvc().AddRazorRuntimeCompilation();
+
+            services.AddIdentity<PersonUser, IdentityRole>()
+                .AddEntityFrameworkStores<PersonDBContext>()
+                .AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +64,7 @@ namespace WebAssignmentMVC
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

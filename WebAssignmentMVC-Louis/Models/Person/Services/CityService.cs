@@ -38,11 +38,15 @@ namespace WebAssignmentMVC.Models.Person.Services
                 return false;
         }
 
-        public City FindById(int id)
+        public string FindById(int id)
         {
             return _cityRepo.FindById(id);
         }
 
+        public City GetCity(int id)
+        {
+            return _cityRepo.GetCity(id);
+        }
         public List<City> GetAll()
         {
             return _cityRepo.GetAll();

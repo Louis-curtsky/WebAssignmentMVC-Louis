@@ -11,7 +11,8 @@ namespace WebAssignmentMVC.Models.Person.Repo
     {
         City Create(City city);
         List<City> GetAll();
-        City FindById(int id);
+        string FindById(int id);
+        public City GetCity(int id);
 
         bool Update(City city);
         bool Delete(City city);

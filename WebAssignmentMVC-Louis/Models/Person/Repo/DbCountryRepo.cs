@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,14 +29,19 @@ namespace WebAssignmentMVC.Models.Person.Repo
             return returnValue == 1 ? true : false;
         }
 
-        public Country FindById(int id)
+        public string FindById(int id)
+        {
+            Country countryFound = _personDBContext.Countries.Find(id);
+            return countryFound.Cname;
+        }
+
+        public Country GetCountry(int id)
         {
             return _personDBContext.Countries.Find(id);
         }
-
         public List<Country> GetAll()
         {
-           return (_personDBContext.Countries.ToList());
+           return (_personDBContext.Countries.Include(country=>country.Cities).ToList());
         }
 
      

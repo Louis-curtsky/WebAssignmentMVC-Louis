@@ -1,10 +1,10 @@
 ﻿
 $(document).ready(function () {
-    $.get("Country/GetCountries", function (response) {
+    $.get("Person/GetCountries", function (response) {
+        $('#countryList').empty();
         console.log(response);
-        $('#countrtList').empty();
         response.map(country => 
-            $('countrtList').append($('<option/>', {
+            $('countryList').append($('<option/>', {
                 value: country,
                 text: country
             })))

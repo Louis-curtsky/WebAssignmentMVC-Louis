@@ -1,0 +1,32 @@
+﻿@model List<Language>
+@{
+    ViewData["Title"] = "Index Language";
+}
+
+
+<h1>Language List</h1>
+<a asp-action="Create" class="btn-secondary mt-4 mb-4">Add new Language</a>
+<table class="contact">
+    <tr>
+        <th>ID</th>
+        <th>Language</th>
+        <th>Actions</th>
+    </tr>
+    <tbody>
+        @foreach (Language language in Model)
+        {
+            <tr>
+                <td>@language.Id</td>
+                <td>@language.LangName.</td>
+                <td>
+                    <a asp-action="Edit" asp-controller="Language" asp-route-id="@language.Id" class="mr-4 text-warning">Edit</a>
+                    <a asp-action="Delete" asp-controller="Language" asp-route-id="@language.Id" class="mr-4 text-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (ViewBag.msg != null)
+{
+    <h3>@ViewBag.msg</h3>
+}

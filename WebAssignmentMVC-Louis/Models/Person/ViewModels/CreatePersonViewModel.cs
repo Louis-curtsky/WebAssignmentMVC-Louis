@@ -17,8 +17,12 @@ namespace WebAssignmentMVC.Models.Person.ViewModels
         public string LastName { get; set; }
 
         [Required]
-        [StringLength(255)]
-        public string City { get; set; }
+        [Display(Name = "Country")]
+        public int CountryId { get; set; }
+
+        [Required]
+        [Display(Name = "City")]
+        public int CityId { get; set; }
 
         [Required(ErrorMessage = "Please enter Your Contact No")]
 
@@ -28,5 +32,8 @@ namespace WebAssignmentMVC.Models.Person.ViewModels
 
         public List<Country> Countries { get; set; }
 
+        public List<City> Cities { get; set; }
+
+        public List<PersonLanguage> personLanguage { get; set; }
     }
 }

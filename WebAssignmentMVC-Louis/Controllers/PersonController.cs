@@ -11,22 +11,25 @@ namespace WebAssignmentMVC.Controllers
 {
     public class PersonController : Controller
     {
+        private readonly ICityService _cityService;
         private readonly ICountryService _countryService;
         private readonly IPeopleService _peopleService;
         private readonly IPeopleRepo _memoryPeople;
 
-        public PersonController(IPeopleService peopleService, ICountryService countryService, IPeopleRepo memoryPeople)
+        public PersonController(IPeopleService peopleService, ICountryService countryService, IPeopleRepo memoryPeople, ICityService cityService)
         {
 //            _memoryPeople = new IMemoryPeopleRepo();
             _peopleService = peopleService;
             _countryService = countryService;
             _memoryPeople = memoryPeople;
+            _cityService = cityService;
         }
         
         [HttpGet]
         public IActionResult Index()
         {
-            return View(_peopleService.All());
+            List<Person> listPerson = _peopleService.All();
+            return View(listPerson);
         }
 
         [HttpGet]
@@ -43,7 +46,7 @@ namespace WebAssignmentMVC.Controllers
 
 */        public IActionResult GetPersonList()
         {
-            return PartialView("_PersonList", _memoryPeople.All());
+            return PartialView("_PersonList", _peopleService.All());
         }
 
         [HttpGet]
@@ -51,6 +54,7 @@ namespace WebAssignmentMVC.Controllers
         {
             CreatePersonViewModel createPerson = new CreatePersonViewModel();
             createPerson.Countries = _countryService.GetAll();
+            createPerson.Cities = _cityService.GetAll();
             return View(createPerson);
         }
 
@@ -67,13 +71,10 @@ namespace WebAssignmentMVC.Controllers
 
 
         [HttpGet]
-        public IActionResult FindPerson(List<Person> searchResult)
+        public IActionResult FindPerson()
         {
-            List<Person> searchPerson = _peopleService.All();
-            if (searchResult.Count!=0)
-            return PartialView("_PersonDetailView", searchResult);
-            else
-            return View(searchPerson);
+                return View();
+
         }
 
         [HttpPost]
@@ -81,13 +82,23 @@ namespace WebAssignmentMVC.Controllers
         public IActionResult FindPerson(int id)
         {
             Person searchResult = _peopleService.FindById(id);
-            return View(searchResult);
+            PersonViewModel showResult = new PersonViewModel()
+            {
+                Id        = searchResult.Id,
+                FirstName = searchResult.FirstName,
+                LastName = searchResult.LastName,
+                Phone = searchResult.Phone,
+                Country = _countryService.FindById(searchResult.CountryId),
+                Cities = _cityService.FindById(searchResult.CtyId),
+                Language = searchResult.languageSpoken
+            };
+            return PartialView("_PersonDetailView", showResult);
         }
 
         [HttpGet]
         public IActionResult Details(List<Person> searchResult)
         {
-            List<Person> person = _memoryPeople.All();
+            List<Person> person = _peopleService.All();
 
             if (searchResult.Count == 0)
             {
@@ -100,8 +111,17 @@ namespace WebAssignmentMVC.Controllers
         [HttpPost]
         public IActionResult Detail(int id)
         {
-            Person searchResult = _memoryPeople.FindByID(id);
-            return PartialView ("_PersonDetailView",searchResult);
+            Person searchResult = _peopleService.FindById(id);
+            PersonViewModel showResult = new PersonViewModel()
+            {
+                FirstName = searchResult.FirstName,
+                LastName = searchResult.LastName,
+                Phone = searchResult.Phone,
+                Country = _countryService.FindById(searchResult.CountryId),
+                Cities = _cityService.FindById(searchResult.CtyId),
+                Language = searchResult.languageSpoken
+            };
+            return PartialView ("_PersonDetailView",showResult);
         }
 
         [HttpGet]
@@ -146,6 +166,11 @@ namespace WebAssignmentMVC.Controllers
                 ViewBag.msg = "Unable to remove person with id: " + id;
             }
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult GetCountries()
+        {
+            return Json(_countryService.GetAll());
         }
     }
 }

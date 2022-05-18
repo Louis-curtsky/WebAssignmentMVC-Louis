@@ -55,7 +55,7 @@ namespace WebAssignmentMVC.Controllers
         // GET: CountryController/Edit/5
         public ActionResult Edit(int id)
         {
-            Country country = _countryService.FindById(id);
+            string country = _countryService.FindById(id);
 
             if (country == null)
             {
@@ -64,7 +64,7 @@ namespace WebAssignmentMVC.Controllers
 
             CreateCountryViewModel editCountry = new CreateCountryViewModel()
             {
-                CountryName = country.Cname
+                CountryName = country
             };
 
             ViewBag.id = id;
@@ -83,7 +83,7 @@ namespace WebAssignmentMVC.Controllers
                 {
                     return RedirectToAction(nameof(Index));
                 }
-                ModelState.AddModelError("System", "Fail to edit City!!!");
+                ModelState.AddModelError("System", "Fail to edit Country!!!");
             }
             ViewBag.id = id;
             return View(country);
@@ -92,7 +92,7 @@ namespace WebAssignmentMVC.Controllers
         // GET: CountryController/Delete/5
             public ActionResult Delete(int id)
         {
-            Country country = _countryService.FindById(id);
+            string country = _countryService.FindById(id);
 
             if (country != null)
             {
@@ -100,15 +100,11 @@ namespace WebAssignmentMVC.Controllers
                 return RedirectToAction(nameof(Index));
                 else
                 {
-                    ModelState.AddModelError("System", "Fail to create country!!!");
+                    ModelState.AddModelError("System", "Fail to delete country!!!");
                 }
             }
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult GetCountries()
-        {
-            return Json(_countryService.GetAll());
-        }
     }
 }

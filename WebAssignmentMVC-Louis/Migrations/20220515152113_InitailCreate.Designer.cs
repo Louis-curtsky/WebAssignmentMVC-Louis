@@ -10,8 +10,8 @@ using WebAssignmentMVC.Models.Person.Data;
 namespace WebAssignmentMVC.Migrations
 {
     [DbContext(typeof(PersonDBContext))]
-    [Migration("20220514095827_SeedPerson")]
-    partial class SeedPerson
+    [Migration("20220515152113_InitailCreate")]
+    partial class InitailCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -114,6 +114,55 @@ namespace WebAssignmentMVC.Migrations
                     b.HasIndex("PersonId");
 
                     b.ToTable("Countries");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Cname = "Sweden"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Cname = "France"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Cname = "Germany"
+                        });
+                });
+
+            modelBuilder.Entity("WebAssignmentMVC.Models.Person.Language", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("LangName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Language");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            LangName = "Swedish"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            LangName = "English"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            LangName = "Chinese"
+                        });
                 });
 
             modelBuilder.Entity("WebAssignmentMVC.Models.Person.Person", b =>
@@ -141,6 +190,68 @@ namespace WebAssignmentMVC.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Persons");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CountryId = 1,
+                            CtyId = 1,
+                            FirstName = "Louis",
+                            LastName = "Lim",
+                            Phone = "0765551111"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CountryId = 1,
+                            CtyId = 2,
+                            FirstName = "Michael",
+                            LastName = "Kent",
+                            Phone = "0733338888"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CountryId = 1,
+                            CtyId = 3,
+                            FirstName = "Åsa",
+                            LastName = "Jason",
+                            Phone = "0721231234"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CountryId = 2,
+                            CtyId = 0,
+                            FirstName = "Andy",
+                            LastName = "Birch",
+                            Phone = "0744448888"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CountryId = 2,
+                            CtyId = 0,
+                            FirstName = "Johnny",
+                            LastName = "Walker",
+                            Phone = "0751244674"
+                        });
+                });
+
+            modelBuilder.Entity("WebAssignmentMVC.Models.Person.PersonLanguage", b =>
+                {
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LanguageId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PersonId", "LanguageId");
+
+                    b.HasIndex("LanguageId");
+
+                    b.ToTable("PersonLanguage");
                 });
 
             modelBuilder.Entity("WebAssignmentMVC.Models.Person.City", b =>
@@ -161,6 +272,21 @@ namespace WebAssignmentMVC.Migrations
                     b.HasOne("WebAssignmentMVC.Models.Person.Person", null)
                         .WithMany("Country")
                         .HasForeignKey("PersonId");
+                });
+
+            modelBuilder.Entity("WebAssignmentMVC.Models.Person.PersonLanguage", b =>
+                {
+                    b.HasOne("WebAssignmentMVC.Models.Person.Language", "Language")
+                        .WithMany("personLanguage")
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebAssignmentMVC.Models.Person.Person", "Person")
+                        .WithMany("languageSpoken")
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

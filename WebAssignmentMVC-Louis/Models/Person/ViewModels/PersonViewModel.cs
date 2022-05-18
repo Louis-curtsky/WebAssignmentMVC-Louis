@@ -11,9 +11,10 @@ namespace WebAssignmentMVC.Models.Person.ViewModels
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
-
-        public List<Country>Country { get; set; } // Link using Country ID
-
         public string Phone { get; set; }
+
+        public string Country { get; set; } // Link using Country ID
+        public List<PersonLanguage> Language { get; set; }
+        public string Cities { get; set; }
     }
 }

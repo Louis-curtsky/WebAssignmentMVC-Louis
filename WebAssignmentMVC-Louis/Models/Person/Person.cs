@@ -21,9 +21,9 @@ namespace WebAssignmentMVC.Models.Person
         public string Phone { get; set; }
         public int CtyId { get; set; }
 
-        public List<City> City { get; set; }
-
         public int CountryId { get; set; }
-        public List<Country> Country { get; set; }
+        public Country Country { get; set; }
+
+        public List<PersonLanguage> languageSpoken { get; set; }
     }
 }

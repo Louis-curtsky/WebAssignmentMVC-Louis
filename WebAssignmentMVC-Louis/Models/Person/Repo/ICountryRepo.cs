@@ -9,7 +9,8 @@ namespace WebAssignmentMVC.Models.Person.Repo
     {
         Country Create(Country country);
         List<Country> GetAll();
-        Country FindById(int id);
+        string FindById(int id);
+        Country GetCountry(int id);
 
         Country Update(Country country);
         bool Delete(Country country);
