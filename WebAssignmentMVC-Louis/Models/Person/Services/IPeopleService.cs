@@ -14,6 +14,6 @@ namespace WebAssignmentMVC.Models.Person
 
         bool Edit(int id, CreatePersonViewModel person);
         bool Remove(int id);
-        
+        PersonViewModel Search(string firstName, string lastName, int countryId, int cityId);
     }
 }

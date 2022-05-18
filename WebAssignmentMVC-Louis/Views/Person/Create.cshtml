@@ -23,17 +23,17 @@
         </div>
         <div class="form-group row">
             <label asp-for="CountryId"></label>
-            <select>
-                @foreach (Country country in Model.Countries)
-                {
-                    <option value="@country.Id">@country.Cname</option>
-                }
-            </select>
-            <span asp-validation-for="CountryId"></span>
-        </div>
+                <select id="CountryId" name="CountryID">
+                    @foreach (Country country in Model.Countries)
+                    {
+                        <option value="@country.Id">@country.Cname</option>
+                    }
+                </select>
+                <span asp-validation-for="CountryId"></span>
+            </div>
         <div class="form-group row">
             <label asp-for="CityId"></label>
-            <select>
+            <select id="CityId" name="CityId">
                 @foreach (City city in Model.Cities)
                 {
                     <option value="@city.Id">@city.Name</option>

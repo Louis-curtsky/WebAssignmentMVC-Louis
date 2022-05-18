@@ -28,20 +28,23 @@ namespace WebAssignmentMVC.Models.Person
 
         public Person Create(Person person)
         {
+
             _personDbContext.Add(person);
             _personDbContext.SaveChanges();
                 return person;
         }
 
 
-        public List<Person> Search(string firstName, string lastName, int id)
+        public List<Person> Search(string firstName, string lastName, int countryId, int cityId)
         {
             if (firstName == null)
                 firstName = "";
             else if (lastName == null)
                 lastName = "";
-            else if (id < 0)
-                id = 99999; // To be replace 
+            else if (countryId < 0)
+                countryId = 99999; // To be replace 
+            else if (cityId < 0)
+                cityId = 99999;
 
             List<Person> searchPerson = new List<Person>();
 

@@ -39,21 +39,27 @@ namespace WebAssignmentMVC.Controllers
         }
 
 
-        [HttpGet]
+ //       [HttpGet]
         public IActionResult Create()
         {
             CreatePersonViewModel createPerson = new CreatePersonViewModel();
             createPerson.Countries = _countryService.GetAll();
             createPerson.Cities = _cityService.GetAll();
-            return View(createPerson);
+            return View (createPerson);
         }
 
         [HttpPost]
-        public IActionResult Create(Person personViewModel)
+        public IActionResult Create(Person personViewModel, int countryId, int cityId)
         {
             if (ModelState.IsValid)
             {
-                Person returnPerson = _peopleService.Add(personViewModel);
+                if (personViewModel != null)
+                {
+                    personViewModel.CountryId = countryId;
+                    personViewModel.CtyId = cityId;
+                    Person returnPerson = _peopleService.Add(personViewModel);
+
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View();
@@ -149,11 +155,10 @@ namespace WebAssignmentMVC.Controllers
 
         [HttpPost]
 
-        public IActionResult Searching(string firstName, string lastName, int cid)
+        public IActionResult Searching(string firstName, string lastName, int countryId, int cityId )
         {
-//            firstName = "Louis";
-            List<Person> peopleSearch = new List<Person>();
-            peopleSearch = _memoryPeople.Search(firstName, lastName, cid);
+            PersonViewModel peopleSearch = _peopleService.Search(firstName, lastName, cityId, countryId);
+            List<PersonViewModel> searchResult = new List<PersonViewModel>();
             return View (peopleSearch);
         }
 

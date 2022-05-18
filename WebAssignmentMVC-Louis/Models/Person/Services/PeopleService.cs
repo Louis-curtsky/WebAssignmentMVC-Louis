@@ -46,10 +46,35 @@ namespace WebAssignmentMVC.Models.Person
         public Person Add(Person personViewModel)
         {
 
-            Person resultList = _peopleRepo.Create(personViewModel);
+            Person personToAdd = new Person();
+            personToAdd.CountryId = personViewModel.CountryId;
+            personToAdd.CtyId = personViewModel.CtyId;
+            personToAdd.FirstName = personViewModel.FirstName;
+            personToAdd.LastName = personViewModel.LastName;
+            personToAdd.Phone = personViewModel.Phone;
+            personToAdd.languageSpoken = personViewModel.languageSpoken;
+
+            _peopleRepo.Create(personToAdd);
  
-            return resultList;
+            return personToAdd;
         }
 
+        public PersonViewModel Search(string firstName, string lastName, int countryId, int cityId)
+        {
+            List<Person> person = _peopleRepo.Search(firstName, lastName, countryId, cityId);
+            PersonViewModel searchPerson = new PersonViewModel();
+            foreach (Person personItem in person)
+            {
+                searchPerson.Id = personItem.Id;
+                searchPerson.FirstName = personItem.FirstName;
+                searchPerson.LastName = personItem.LastName;
+                searchPerson.Phone = personItem.Phone;
+                searchPerson.CountryId = personItem.Country.Id;
+                searchPerson.Country = personItem.Country.Cname;
+                searchPerson.CityId = personItem.CtyId;
+                searchPerson.Language = personItem.languageSpoken;
+            }
+            return searchPerson;
+        }
     }
 }
