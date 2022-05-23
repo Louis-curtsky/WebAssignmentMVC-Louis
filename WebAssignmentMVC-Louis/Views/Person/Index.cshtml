@@ -7,19 +7,41 @@
 
 <table class="contact">
     <tr>
-        <th>ID Number</th>
+        <th>ID</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Telephone</th>
         <th>Country</th>
         <th>City</th>
+        <th>Actions</th>
         <th>Language</th>
     </tr>
     <tbody>
-        @foreach (Person person in Model)
+        @for(int i=0; i<Model.Count; i++)
         {
             <tr>
-                <partial name="_PersonList" model="person" />
+                <td>@Model[i].Id</td>
+                <td>@Model[i].FirstName</td>
+                <td>@Model[i].LastName</td>
+                <td>@Model[i].Phone</td>
+                <td>@Model[i].Country.Cname</td>
+                <td>
+                    @Model[i].CtyId
+                </td>
+                <td>
+                    <a class="btn btn-danger" asp-action="Delete" asp-controller="Person" asp-route-id="@Model[i].Id">Delete</a>
+                    <button class="btn btn-warning" onclick="findThroughId('@Url.Action("Edit", "Person", new { id = Model[i].Id})')">Edit</button>
+                </td>
+                <td>
+                        @if (Model[i].languageSpoken != null)
+                        {
+                            for (int j=0; j<Model[i].languageSpoken.Count; j++)
+                            {
+                                List<PersonLanguage> lang = Model[i].languageSpoken;
+                            <a asp-action="LanguageDetails" asp-route-id="@lang[j].LanguageId">Click</a>
+                            }
+                        }
+                </td>
             </tr>
         }
     </tbody>

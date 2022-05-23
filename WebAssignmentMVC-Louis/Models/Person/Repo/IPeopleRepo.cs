@@ -12,12 +12,14 @@ namespace WebAssignmentMVC.Models.Person
         Person Read(int id);
 
         List<Person> All();
-        Person Create(Person person);
+        Person Create(Person person, List<PersonLanguage> personLang);
         
         Person FindByID(int id);
 
         List<Person> Search(string firstName, string lastName, int countryId, int cityId);
-        Person Update(Person person);
+        void Update(Person person);
         bool Delete(Person person);
+
+        List<PersonLanguage> GetLanguage(int id);
     }
 }

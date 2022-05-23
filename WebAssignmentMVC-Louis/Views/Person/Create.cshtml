@@ -6,7 +6,7 @@
 <h3>Add new Person</h3>
 
 <div>
-    <form asp-action="Create" method="post">
+    <form action="Create" method="post">
         <div class="form-group">
             <label asp-for="FirstName"></label>
             <input asp-for="FirstName" id="FirstName" />
@@ -23,25 +23,30 @@
         </div>
         <div class="form-group row">
             <label asp-for="CountryId"></label>
-                <select id="CountryId" name="CountryID">
-                    @foreach (Country country in Model.Countries)
-                    {
-                        <option value="@country.Id">@country.Cname</option>
-                    }
-                </select>
-                <span asp-validation-for="CountryId"></span>
-            </div>
+            <select id="countryId" name="countryId" class="select">
+                @foreach (var item in ViewBag.Countries)
+                {
+                    <option value="@item.Id">@item.Cname</option>
+                }
+            </select><span asp-validation-for="CountryId"></span>
+        </div>
         <div class="form-group row">
             <label asp-for="CityId"></label>
-            <select id="CityId" name="CityId">
-                @foreach (City city in Model.Cities)
+            <select id="cityId" name="cityId" class="select">
+                @foreach (var item in ViewBag.Cities)
                 {
-                    <option value="@city.Id">@city.Name</option>
+                    <option value="@item.Id">@item.Name</option>
                 }
-            </select>
-            <span asp-validation-for="CityId"></span>
+            </select><span asp-validation-for="CityId"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="PersonLang">Language</label>
+            @Html.DropDownList("Language", new SelectList(ViewBag.Language, "Id", "LangName"), new { @class = "multi-select", multiple = "multiple" })
+
+            <span asp-validation-for="PersonLang"></span>
         </div>
         <button type="submit" class="button">Create Person</button>
+
     </form>
 </div>
 <div class="col-2 " id="PersonList">

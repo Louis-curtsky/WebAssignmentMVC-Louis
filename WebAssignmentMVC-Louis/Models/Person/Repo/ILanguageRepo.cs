@@ -10,8 +10,10 @@ namespace WebAssignmentMVC.Models.Person.Repo
         Language Create(Language language);
         List<Language> GetAll();
         Language FindById(int id);
-
+        string GetLangName(int id);
         Language Update(Language language);
         bool Delete(Language language);
+
+        void AddLang(PersonLanguage personLang, List<Person> langId);
     }
 }

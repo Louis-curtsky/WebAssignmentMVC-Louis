@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WebAssignmentMVC.Models;
 using WebAssignmentMVC.Models.Identity;
 using WebAssignmentMVC.Models.Person;
+using WebAssignmentMVC.Models.Person.ViewModels;
 
 namespace WebAssignmentMVC.Models.Person.Data
 {
@@ -18,6 +19,7 @@ namespace WebAssignmentMVC.Models.Person.Data
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Language> Language { get; set; }
+        public DbSet<PersonLanguage> PersonLanguage { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -91,7 +93,6 @@ namespace WebAssignmentMVC.Models.Person.Data
             #endregion of Person Language Join
         }
 
-        public DbSet<WebAssignmentMVC.Models.Person.PersonLanguage> PersonLanguage { get; set; }
 
 
     }

@@ -5,15 +5,27 @@
 
 <h3>Search for Person Information</h3>
 
-<form asp-action="FindPerson" method="post">
-    <label>Enter ID</label>
-    <input name="Id" type="number" id="inputId" min="0"/>
+<div class="contact">
+ <form asp-action="FindPerson" method="post">
+    <label>Select Person</label>
+    @*<input name="Id" type="number" id="inputId" min="0" />*@
+    <select id="Id" name="Id" class="select">
+        @foreach (Person item in ViewBag.Person)
+            {
+                <option value="@item.Id">@item.FirstName, @item.LastName</option>
+            }
+    </select>
+    <div class="form-group">
+        @*<input type="submit" value="Search" class="btn btn-primary" />*@
+        @*<input type="button" title="Find" value="Search"*@ 
+               @*onclick="location.href='@Url.Action("FindPerson", "Person", new { id = Model.Id})'" />*@
+        <button onclick="findPersonId('@Url.Action("FindPerson", "Person"), new {id=@Model.Id})', 'inputId')" class="button">Search</button>
+    </div>
+ </form>
+   <div class="partialView" mode="Model">
 
-    <button onclick="findThroughId('@Url.Action("FindPerson", "Person")', 'inputId')" class="button">Search</button>
-</form>
-<hr />
-<div>
-        <partial name="_PersonDetailView" model="Model" />
-</div>
+   </div>
+</div>  
+
 
 

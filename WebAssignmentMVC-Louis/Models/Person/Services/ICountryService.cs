@@ -10,7 +10,7 @@ namespace WebAssignmentMVC.Models.Person.Services
     {
         Country Create(CreateCountryViewModel country);
         List<Country> GetAll();
-        string FindById(int id);
+        Country FindById(int id);
 
         Country Edit(int id, CreateCountryViewModel editountry);
         bool Remove(int id);

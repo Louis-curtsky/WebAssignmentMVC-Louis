@@ -23,7 +23,6 @@ namespace WebAssignmentMVC.Models.Person
 
         public int CountryId { get; set; }
         public Country Country { get; set; }
-
         public List<PersonLanguage> languageSpoken { get; set; }
     }
 }

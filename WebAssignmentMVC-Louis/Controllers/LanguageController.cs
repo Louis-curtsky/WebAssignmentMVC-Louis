@@ -13,10 +13,12 @@ namespace WebAssignmentMVC.Controllers
     public class LanguageController : Controller
     {
         private readonly ILanguageService _languageService;
+        private readonly IPeopleService _PeopleService;
 
-        public LanguageController(ILanguageService languageService)
+        public LanguageController(ILanguageService languageService, IPeopleService peopleService)
         {
             _languageService = languageService;
+            _PeopleService = peopleService;
         }
         // GET: LanguageController
         public ActionResult Index()
@@ -54,16 +56,16 @@ namespace WebAssignmentMVC.Controllers
         // GET: LanguageController/Edit/5
         public ActionResult Edit(int id)
         {
-            Language language = _languageService.FindById(id);
+            Language lang = _languageService.FindById(id);
 
-            if (language == null)
+            if (lang == null)
             {
                 return RedirectToAction(nameof(Index));
             }
 
             CreateLanguageViewModel editLanguage = new CreateLanguageViewModel()
             {
-                LangName = language.LangName
+                LangName = lang.LangName
             };
 
             ViewBag.id = id;
@@ -92,9 +94,9 @@ namespace WebAssignmentMVC.Controllers
         // GET: LanguageController/Delete/5
         public ActionResult Delete(int id)
         {
-            Language language = _languageService.FindById(id);
+            Language lang = _languageService.FindById(id);
 
-            if (language != null)
+            if (lang != null)
             {
                 if (_languageService.Remove(id))
                     return RedirectToAction(nameof(Index));
@@ -111,20 +113,61 @@ namespace WebAssignmentMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            Language language = _languageService.FindById(id);
-
-            if (language != null)
-            {
                 if (_languageService.Remove(id))
                     return RedirectToAction(nameof(Index));
                 else
                 {
                     ModelState.AddModelError("System", "Fail to delete language!!!");
                 }
-            }
             return RedirectToAction(nameof(Index));
         }
 
+        public ActionResult AddPerson(int id)
+        {
+            List<PersonLanguage> lang = _PeopleService.GetLanguage(id);
+            List<Person> allPerson = _PeopleService.All();
+            if (lang == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            PersonLanguage showLang = new PersonLanguage();
+            if (showLang != null)
+            {
+            showLang.LanguageId = id;
+            ViewBag.LangName = _languageService.GetLanguageName(id);
+            ViewBag.Id = id;
+            }
+            ViewBag.Persons = allPerson;
+
+            return View();  
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddPerson(PersonLanguage langPerson, int id)
+        {
+            var fromPerson = HttpContext.Request.Form["PersonId"];
+            langPerson.LanguageId = id;
+            langPerson.Language = _languageService.FindById(id);
+            List<Person> maxPerson = _PeopleService.All();
+            List<Language> maxLang = _languageService.GetAll();
+            List<Person> toAddPer = new List<Person>();
+            int count = 0;
+            foreach (Person person in maxPerson)
+            {
+                if (count <= fromPerson.Count - 1)
+                {
+                    toAddPer.Add(new Person { Id = int.Parse(fromPerson[count]) });
+                    count++;
+                }
+            }
+            if (langPerson != null)
+            {
+                _languageService.AddLang(langPerson, toAddPer);
+                return RedirectToAction(nameof(Index));
+             }
+            return View();
+        }
         public IActionResult GetLanguages()
         {
             return Json(_languageService.GetAll());

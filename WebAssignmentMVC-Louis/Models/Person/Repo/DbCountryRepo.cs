@@ -29,10 +29,10 @@ namespace WebAssignmentMVC.Models.Person.Repo
             return returnValue == 1 ? true : false;
         }
 
-        public string FindById(int id)
+        public Country FindById(int id)
         {
             Country countryFound = _personDBContext.Countries.Find(id);
-            return countryFound.Cname;
+            return countryFound;
         }
 
         public Country GetCountry(int id)

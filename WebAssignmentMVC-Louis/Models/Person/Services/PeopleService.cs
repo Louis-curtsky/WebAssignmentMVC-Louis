@@ -22,9 +22,20 @@ namespace WebAssignmentMVC.Models.Person
             return _peopleRepo.All();
          }
 
-        public bool Edit(int id, CreatePersonViewModel person)
+        public void Edit(int id, PersonViewModel personViewModel)
         {
-            throw new NotImplementedException();
+
+            Person person = _peopleRepo.FindByID(id);
+            if (person != null)
+            {
+            person.FirstName = personViewModel.FirstName;
+            person.LastName = personViewModel.LastName;
+            person.Phone = personViewModel.Phone;
+            person.CountryId = personViewModel.CountryId;
+            person.CtyId = personViewModel.CityId;
+            person.languageSpoken = personViewModel.PersonLang;
+            _peopleRepo.Update(person);
+            }
         }
 
         public Person FindById(int id)
@@ -43,38 +54,27 @@ namespace WebAssignmentMVC.Models.Person
             return _peopleRepo.Delete(person);
         }
 
-        public Person Add(Person personViewModel)
+        public Person Add(CreatePersonViewModel personViewModel, List<PersonLanguage> personLang)
         {
+            Person person = new Person();
+            person.CountryId = personViewModel.CountryId;
+            person.CtyId = personViewModel.CityId;
+            person.FirstName = personViewModel.FirstName;
+            person.LastName = personViewModel.LastName;
+            person.Phone = personViewModel.Phone;
 
-            Person personToAdd = new Person();
-            personToAdd.CountryId = personViewModel.CountryId;
-            personToAdd.CtyId = personViewModel.CtyId;
-            personToAdd.FirstName = personViewModel.FirstName;
-            personToAdd.LastName = personViewModel.LastName;
-            personToAdd.Phone = personViewModel.Phone;
-            personToAdd.languageSpoken = personViewModel.languageSpoken;
-
-            _peopleRepo.Create(personToAdd);
- 
-            return personToAdd;
+            return _peopleRepo.Create(person, personLang);
         }
 
-        public PersonViewModel Search(string firstName, string lastName, int countryId, int cityId)
+        public List<Person> Search(string firstName, string lastName, int countryId, int cityId)
         {
             List<Person> person = _peopleRepo.Search(firstName, lastName, countryId, cityId);
-            PersonViewModel searchPerson = new PersonViewModel();
-            foreach (Person personItem in person)
-            {
-                searchPerson.Id = personItem.Id;
-                searchPerson.FirstName = personItem.FirstName;
-                searchPerson.LastName = personItem.LastName;
-                searchPerson.Phone = personItem.Phone;
-                searchPerson.CountryId = personItem.Country.Id;
-                searchPerson.Country = personItem.Country.Cname;
-                searchPerson.CityId = personItem.CtyId;
-                searchPerson.Language = personItem.languageSpoken;
-            }
-            return searchPerson;
+            return person;
+        }
+
+        public List<PersonLanguage> GetLanguage(int id)
+        {
+            return _peopleRepo.GetLanguage(id);
         }
     }
 }

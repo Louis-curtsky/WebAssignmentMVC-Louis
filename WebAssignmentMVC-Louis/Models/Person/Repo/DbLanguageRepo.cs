@@ -15,6 +15,12 @@ namespace WebAssignmentMVC.Models.Person.Repo
         {
             _personDBContext = personDBContext;
         }
+
+        public void AddLang(PersonLanguage personLang, List<Person> langId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Language Create(Language language)
         {
             _personDBContext.Add(language);
@@ -39,6 +45,12 @@ namespace WebAssignmentMVC.Models.Person.Repo
             return _personDBContext.Language.Include(language => language.personLanguage).ToList();
         }
 
+        public string GetLangName(int id)
+        {
+            Language lang = new Language();
+            lang = _personDBContext.Language.Find(id);
+            return (lang.LangName);
+        }
 
         public Language Update(Language language)
         {

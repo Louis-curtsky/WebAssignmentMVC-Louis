@@ -14,6 +14,12 @@ namespace WebAssignmentMVC.Models.Person.Services
         {
             _languageRepo = languageRepo;
         }
+
+        public void AddLang(PersonLanguage personLang, List<Person> langId)
+        {
+            _languageRepo.AddLang(personLang, langId);
+        }
+
         public Language Create(CreateLanguageViewModel language)
         {
             if (string.IsNullOrWhiteSpace(language.LangName))
@@ -43,11 +49,17 @@ namespace WebAssignmentMVC.Models.Person.Services
             return _languageRepo.GetAll();
         }
 
+        public string GetLanguageName(int id)
+        {
+            Language languageFound = _languageRepo.FindById(id);
+            return (languageFound.LangName);
+        }
+
         public bool Remove(int id)
         {
-            Language language = _languageRepo.FindById(id);
-            if (language != null)
-                return _languageRepo.Delete(language);
+            Language lang = _languageRepo.FindById(id);
+            if (lang != null)
+                return _languageRepo.Delete(lang);
             else
                 return false;
         }

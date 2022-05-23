@@ -2,7 +2,7 @@
 
 @if (Model != null)
             {
-<table class="contact" width="500px">
+<table class="col-2" width="500px">
     <tr>
         <th>ID Number:</th>
         <td>@Model.Id</td>
@@ -21,11 +21,17 @@
     </tr>
     <tr>
         <th>Country</th>
-        <td>@Model.Country</td>
+        <td>@ViewBag.Country</td>
     </tr>
     <tr>
         <th>Country</th>
-        <td>@Model.Cities</td>
+        <td>@ViewBag.City</td>
+    </tr>
+    <tr>
+        <th>Language</th>
+        <td>
+            @*@Html.DropDownList("Language", ViewBag.Language as IEnumerable<SelectListItem>);*@
+        </td>
     </tr>
     <tr>
         <th>Actions</th>

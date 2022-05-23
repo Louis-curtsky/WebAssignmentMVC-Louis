@@ -21,17 +21,25 @@ namespace WebAssignmentMVC.Models.Person
         public List<Person> All()
         {
             return _personDbContext.Persons
-                .Include(person=>person.Country)
-                .Include(person=> person.languageSpoken)
                 .ToList();  
         }
 
-        public Person Create(Person person)
+        public Person Create(Person person, List<PersonLanguage> personLang)
         {
-
             _personDbContext.Add(person);
             _personDbContext.SaveChanges();
-                return person;
+            PersonLanguage addPLang = new PersonLanguage();
+            
+            foreach (PersonLanguage lang in personLang)
+            {
+                addPLang.PersonId = person.Id;
+                addPLang.LanguageId = lang.LanguageId;
+                addPLang.Language = lang.Language;
+                addPLang.Person = lang.Person;
+            }
+            _personDbContext.Add(addPLang);
+            _personDbContext.SaveChanges();
+            return person;
         }
 
 
@@ -75,9 +83,18 @@ namespace WebAssignmentMVC.Models.Person
         }
 
 
-            public Person Update(Person person)
+        public void Update(Person person)
         {
-            throw new NotImplementedException();
+            _personDbContext.Update(person);
+            _personDbContext.SaveChanges();
+            PersonLanguage addPLang = new PersonLanguage();
+            foreach (PersonLanguage item in person.languageSpoken)
+            {
+                addPLang.PersonId = item.PersonId;
+                addPLang.LanguageId = item.LanguageId;
+            }
+            _personDbContext.Update(addPLang);
+            _personDbContext.SaveChanges();
         }
 
         public bool Delete(Person person)
@@ -100,6 +117,19 @@ namespace WebAssignmentMVC.Models.Person
                 }
             }
             return null;
+        }
+
+        public List<PersonLanguage> GetLanguage(int id)
+        {
+            List<PersonLanguage> spokeLang = new List<PersonLanguage>();
+            foreach (PersonLanguage langSpoke in _personDbContext.PersonLanguage)
+            {
+                if (langSpoke.PersonId == id)
+                {
+                    spokeLang.Add(langSpoke);
+                }
+            }
+            return spokeLang;
         }
     }
 }

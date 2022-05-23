@@ -55,7 +55,7 @@ namespace WebAssignmentMVC.Controllers
         // GET: CountryController/Edit/5
         public ActionResult Edit(int id)
         {
-            string country = _countryService.FindById(id);
+            Country country = _countryService.FindById(id);
 
             if (country == null)
             {
@@ -64,8 +64,9 @@ namespace WebAssignmentMVC.Controllers
 
             CreateCountryViewModel editCountry = new CreateCountryViewModel()
             {
-                CountryName = country
+                CountryName = country.Cname
             };
+
 
             ViewBag.id = id;
 
@@ -92,7 +93,7 @@ namespace WebAssignmentMVC.Controllers
         // GET: CountryController/Delete/5
             public ActionResult Delete(int id)
         {
-            string country = _countryService.FindById(id);
+            Country country = _countryService.FindById(id);
 
             if (country != null)
             {

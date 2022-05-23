@@ -1,4 +1,4 @@
-﻿@model List<WebAssignmentMVC.Models.Person.ViewModels.PersonViewModel>
+﻿@model List<Person>
 
 <div class="row">
     <div class="col">ID Number</div>
@@ -26,7 +26,7 @@
         <p>@Model[i].CountryId</p>
     </div>
     <div class="col">
-        <p>@Model[i].CityId</p>
+        <p>@Model[i].CtyId</p>
     </div>
     <div class="col">
         <p>@Model[i].Phone</p>
@@ -35,7 +35,7 @@
         <p>
             <a class="btn btn-info" asp-action="Delete" asp-controller="Person" asp-route-id="@Model[i].Id">Delete</a>
             <input name="ID" type="hidden" id="inputId" value="@Model[i].Id" />
-            <button onclick="findThroughId('@Url.Action("Detail", "Person", new { id = Model[i].Id })', 'inputId')">Detail</button>
+            <button onclick="findThroughId('@Url.Action("Detail", "Person", new { id = Model[i].Id })')">Detail</button>
         </p>
     </div>
 </div>

@@ -35,10 +35,9 @@ namespace WebAssignmentMVC.Models.Person.Services
         }
 
 
-        public string FindById(int id)
+        public Country FindById(int id)
         {
-            string countryFound = _countryRepo.FindById(id);
-            return countryFound;
+            return _countryRepo.FindById(id);
         }
         public Country Edit(int id, CreateCountryViewModel editCountry)
         {

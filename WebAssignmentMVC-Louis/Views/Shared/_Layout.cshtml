@@ -6,7 +6,6 @@
     <title>Louis @ViewBag.Title</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
     <header>
@@ -24,7 +23,6 @@
             <div class="dropdown-content" style="left:0;">
                 <a asp-controller="Language" asp-action="Index">List All</a>
                 <a asp-controller="Language" asp-action="Create">Add</a>
-                <a asp-controller="Language" asp-action="AddPerson">Language->Person</a>
             </div>
         </div>
         <div class="dropdown">
@@ -47,9 +45,12 @@
         @RenderBody()
     </div>
     <footer class="border-top footer text-muted">
-        <span>&copy; Louis Skogen</span>
+        <div class="container">
+            &copy; 2022 - Person Information(Louis Lim) - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
     </footer>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/people.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)

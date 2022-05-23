@@ -1,34 +1,31 @@
 ﻿@model WebAssignmentMVC.Models.Person.PersonLanguage
-
-@{
-    ViewData["Title"] = "View";
-}
-
 <h2>Add Person to Language</h2>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="View">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="PersonId" class="control-label"></label>
-                <select asp-for="PersonId" class ="form-control" asp-items="ViewBag.PersonId"></select>
+
+<div class="col-md-4">
+    <form method="post">
+        <input type="hidden" asp-for="LanguageId" name="LanguageId"/>
+        <div class="form-group">
+            <label>Language</label>
+            <div class="font-weight-bold">
+                <h2>
+                    @ViewBag.LangName
+                </h2>
             </div>
-            <div class="form-group">
-                <label asp-for="LanguageId" class="control-label"></label>
-                <select asp-for="LanguageId" class ="form-control" asp-items="ViewBag.LanguageId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+
+        </div>
+        <div class="form-group">
+            <label asp-for="PersonId">Person List</label>
+            @Html.DropDownList("PersonId", new SelectList(ViewBag.Persons, "Id", "FirstName", "LastName"), 
+           new { @class = "multi-select", multiple = "multiple", style = "width: 100px;" })
+
+        </div>
+        <div class="form-group">
+            <button onclick="@Url.Action("AddPerson", "Language")" type="submit">Add</button>
+        </div>
+    </form>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to Language List</a>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

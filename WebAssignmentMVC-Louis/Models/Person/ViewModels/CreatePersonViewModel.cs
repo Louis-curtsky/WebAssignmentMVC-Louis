@@ -28,12 +28,9 @@ namespace WebAssignmentMVC.Models.Person.ViewModels
 
         [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
-        [Required]
 
-        public List<Country> Countries { get; set; }
+        public List<PersonLanguage> PersonLang { get; set; }
 
-        public List<City> Cities { get; set; }
 
-        public List<PersonLanguage> personLanguage { get; set; }
     }
 }

@@ -1,0 +1,64 @@
+﻿@model WebAssignmentMVC.Models.Person.Person
+
+
+<h4>Person Information</h4>
+ <hr />
+
+@if (Model != null)
+{
+<table class="col-2" width="500px">
+    <tr>
+        <th>ID Number:</th>
+        <td>@Model.Id</td>
+    </tr>
+    <tr>
+        <th>First Name:</th>
+        <td>@Model.FirstName</td>
+    </tr>
+    <tr>
+        <th>Last Name:</th>
+        <td>@Model.LastName</td>
+    </tr>
+    <tr>
+        <th>Telephone:</th>
+        <td>@Model.Phone</td>
+    </tr>
+    <tr>
+        <th>Country</th>
+        <td>@ViewBag.Country</td>
+    </tr>
+    <tr>
+        <th>Country</th>
+        <td>@ViewBag.City</td>
+    </tr>
+    <tr>
+        <th>Language</th>
+        <td>
+            @foreach (PersonLanguage item in ViewBag.Language)
+            {
+                @if (item.LanguageId > 0)
+                {
+                    <a asp-action="LanguageDetails" asp-route-id="@item.LanguageId">Language</a>
+        @*                <button onclick="findLanguageId('@Url.Action("LanguageDetails", "Person"),
+    new { id=@item.LanguageId})', 'inputId')" class="button">Language List</button>*@
+
+                }
+            }
+            <div id="languageView"></div>
+        </td>
+            </tr>
+            <tr>
+                <th>Actions</th>
+                <td>
+                    <a class="btn btn-info" asp-action="Delete" asp-controller="Person" asp-route-id="@Model.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+                </td>
+            </tr>
+        </table>
+     <a asp-action="FindPerson">Back to Find by ID</a>
+}
+else
+{
+
+    <p>------</p>
+}

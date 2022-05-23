@@ -9,11 +9,13 @@ namespace WebAssignmentMVC.Models.Person
     public interface IPeopleService
     {
         List<Person> All();
-        Person Add(Person personViewModel);
+        Person Add(CreatePersonViewModel personViewModel, List<PersonLanguage> personLang);
         Person FindById(int id);
 
-        bool Edit(int id, CreatePersonViewModel person);
+        void Edit(int id, PersonViewModel person);
         bool Remove(int id);
-        PersonViewModel Search(string firstName, string lastName, int countryId, int cityId);
+        List<Person> Search(string firstName, string lastName, int countryId, int cityId);
+
+        List<PersonLanguage> GetLanguage(int id);
     }
 }
