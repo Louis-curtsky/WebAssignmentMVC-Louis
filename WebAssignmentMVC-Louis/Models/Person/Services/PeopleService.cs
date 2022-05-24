@@ -24,7 +24,6 @@ namespace WebAssignmentMVC.Models.Person
 
         public void Edit(int id, PersonViewModel personViewModel, List<PersonLanguage> langId)
         {
-
             Person person = _peopleRepo.FindByID(id);
             if (person != null)
             {
@@ -34,7 +33,8 @@ namespace WebAssignmentMVC.Models.Person
             person.CountryId = personViewModel.CountryId;
             person.CtyId = personViewModel.CityId;
             person.languageSpoken = personViewModel.PersonLang;
-            _peopleRepo.Update(person, langId);
+                _peopleRepo.Update(person);
+                _peopleRepo.UpdateLang(person.Id, langId);
             }
         }
 

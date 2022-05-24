@@ -29,15 +29,18 @@ namespace WebAssignmentMVC.Models.Person
             _personDbContext.Add(person);
             _personDbContext.SaveChanges();
             PersonLanguage addPLang = new PersonLanguage();
-            
+            _personDbContext.Persons
+                .OrderByDescending(p => p.Id)
+                .Take(1)
+                .Select(person => person.Id);
             foreach (PersonLanguage lang in personLang)
             {
                 addPLang.PersonId = person.Id;
                 addPLang.LanguageId = lang.LanguageId;
                 addPLang.Language = lang.Language;
                 addPLang.Person = lang.Person;
-            }
             _personDbContext.Add(addPLang);
+            }
             _personDbContext.SaveChanges();
             return person;
         }
@@ -76,21 +79,59 @@ namespace WebAssignmentMVC.Models.Person
         }
 
 
-        public void Update(Person person, List<PersonLanguage> langId)
+        public void Update(Person person)
         {
-            _personDbContext.Update(person);
-            _personDbContext.SaveChanges();
-            PersonLanguage addPLang = new PersonLanguage();
-            foreach (PersonLanguage item in langId)
-            {
-                addPLang.PersonId = item.PersonId;
-                addPLang.LanguageId = item.LanguageId;
-                addPLang.Language = item.Language;
-
-            }
-            _personDbContext.Update(addPLang);
+            _personDbContext
+                .Update(person);
             _personDbContext.SaveChanges();
         }
+
+        public void UpdateLang(int pId, List<PersonLanguage> langId)
+        { 
+            Person lPerson = new Person();
+            Language lLang = new Language();
+            //int pId = 0;
+            //int lId = 0;
+            PersonLanguage perLang = new PersonLanguage();
+
+            for (int i=0; i< langId.Count; i++)
+            {
+                perLang = _personDbContext.PersonLanguage
+                    .AsNoTracking()
+                        .FirstOrDefault(p => p.PersonId == langId[i].PersonId && p.LanguageId == langId[i].LanguageId);
+                if (perLang == null) // If no pID and no LID found == New entry to PersonLanguage
+                {
+                    var s1 =
+                        new PersonLanguage
+                        {
+                            PersonId = langId[i].PersonId,
+                            LanguageId = langId[i].LanguageId,
+                            Person = lPerson,
+                            Language = lLang
+                        };
+                    _personDbContext.Entry<PersonLanguage>(s1).State = EntityState.Detached;
+                }
+                else
+                {
+                    perLang = _personDbContext.PersonLanguage.FirstOrDefault(p => p.PersonId == langId[i].PersonId && p.LanguageId != langId[i].LanguageId);
+                    if (perLang != null) // Found Person ID and no Language ID = New Language
+                    {
+                        var s1 =
+                            new PersonLanguage { 
+                                PersonId = langId[i].PersonId, 
+                                LanguageId = langId[i].LanguageId, 
+                                Person = lPerson, 
+                                Language = lLang };
+                        _personDbContext.Entry<PersonLanguage>(s1).State = EntityState.Detached;
+                    }
+                    else // Exisiting record
+                    {
+                            _personDbContext.Update(langId[i]);
+                    }
+                } // End If
+            } // end foreach 
+                _personDbContext.SaveChanges();
+        } // End Update
 
         public bool Delete(Person person)
         {

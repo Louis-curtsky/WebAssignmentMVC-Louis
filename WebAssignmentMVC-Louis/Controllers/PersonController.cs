@@ -139,7 +139,11 @@ namespace WebAssignmentMVC.Controllers
                 ViewBag.City = _cityService.FindById(searchResult.CtyId);
             }
             if (searchResult.CountryId>0)
-                ViewBag.Country = _countryService.FindById(searchResult.CountryId);
+            {
+                Country countryName =
+                    _countryService.FindById(searchResult.CountryId);
+                ViewBag.Country = countryName.Cname;
+            }
             ViewBag.Language = _peopleService.GetLanguage(id);
             return PartialView("_View", searchResult);
         }
@@ -276,11 +280,15 @@ namespace WebAssignmentMVC.Controllers
             ViewBag.Countries = convCountry;
             ViewBag.Cities = convCities;
             ViewBag.Language = convLang;
+            Country cId = _countryService.FindById(person.CountryId);
+            string ctyId = _cityService.FindById(person.CtyId);
+            ViewBag.Country = cId.Cname;
+            ViewBag.City = ctyId;
             PersonViewModel editPerson = new PersonViewModel()
             {
                 FirstName = person.FirstName,
                 LastName = person.LastName,
-                Phone = person.FirstName,
+                Phone = person.Phone,
                 CountryId = person.CountryId,
                 CityId = person.CtyId,
                 PersonLang = _peopleService.GetLanguage(person.Id)
