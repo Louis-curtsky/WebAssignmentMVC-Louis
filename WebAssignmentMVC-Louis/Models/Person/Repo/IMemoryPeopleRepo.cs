@@ -55,22 +55,15 @@ namespace WebAssignmentMVC.Models.Person
                 cityId = 99999;
 
             List<Person> searchPerson = new List<Person>();
-
-            foreach (Person person in _personDbContext.Persons)
-            {
-                if (person.FirstName == firstName)
-                {
-                    searchPerson.Add(person);
-                }
-                else
-                if (person.LastName==lastName)
-                {
-                    searchPerson.Add(person);
-                }
-                else
-                {
-                }
-            }
+            searchPerson = _personDbContext.Persons
+                .Include(person => person.Country)
+                .Include(person => person.languageSpoken)
+                .Where(person=>person.FirstName == firstName
+                || person.LastName == lastName
+                || person.CtyId == cityId
+                || person.CountryId == countryId
+                )
+                .ToList();
             return searchPerson;
         }
 
@@ -83,15 +76,17 @@ namespace WebAssignmentMVC.Models.Person
         }
 
 
-        public void Update(Person person)
+        public void Update(Person person, List<PersonLanguage> langId)
         {
             _personDbContext.Update(person);
             _personDbContext.SaveChanges();
             PersonLanguage addPLang = new PersonLanguage();
-            foreach (PersonLanguage item in person.languageSpoken)
+            foreach (PersonLanguage item in langId)
             {
                 addPLang.PersonId = item.PersonId;
                 addPLang.LanguageId = item.LanguageId;
+                addPLang.Language = item.Language;
+
             }
             _personDbContext.Update(addPLang);
             _personDbContext.SaveChanges();

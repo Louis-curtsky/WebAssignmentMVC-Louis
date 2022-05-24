@@ -9,6 +9,7 @@ namespace WebAssignmentMVC.Models.Identity
     public class PersonUser : IdentityUser
     {
         public string FirstName { get; set; }
-        public string LastUser { get; set; }
+        public string LastName { get; set; }
+        public DateTime DateOfBirth { get; set; }
     }
 }

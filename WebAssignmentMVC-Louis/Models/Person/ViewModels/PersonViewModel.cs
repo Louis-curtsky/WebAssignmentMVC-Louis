@@ -15,17 +15,13 @@ namespace WebAssignmentMVC.Models.Person.ViewModels
         [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
 
-        [Required]
+    
         [Display(Name = "Country")]
         public int CountryId { get; set; }
 
-        [Required]
+    
         [Display(Name = "City")]
         public int CityId { get; set; }
-
-        [Required(ErrorMessage = "Please enter Your Contact No")]
-
-
         public List<PersonLanguage> PersonLang { get; set; }
 
     }

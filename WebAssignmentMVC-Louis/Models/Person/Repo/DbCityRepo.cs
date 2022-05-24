@@ -37,7 +37,8 @@ namespace WebAssignmentMVC.Models.Person.Repo
         public string FindById(int id)
         {
             City cityFound = _personDBContext.Cities.Find(id);
-            return cityFound.Name;
+            string foundName = cityFound.Name;
+            return foundName;
         }
 
         public City GetCity(int id)

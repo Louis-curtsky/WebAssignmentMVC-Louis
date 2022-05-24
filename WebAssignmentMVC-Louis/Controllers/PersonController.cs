@@ -46,7 +46,7 @@ namespace WebAssignmentMVC.Controllers
                     forLang[i] = "-";
                     forLang[i] = _languageService.GetLangName(chkLang[j].LanguageId);
                     listPerson[i].languageSpoken[j].Language.LangName = forLang[i];
-                    listPerson[i].Country.Cname= _countryService.FindById(listPerson[i].CountryId).Cname;
+   //                 listPerson[i].Country.Cname= _countryService.FindById(listPerson[i].CountryId).Cname;
                 };
             }
             ViewBag.Language = chkLang;
@@ -85,17 +85,16 @@ namespace WebAssignmentMVC.Controllers
             List<PersonLanguage> langId = new List<PersonLanguage>();
             List<Language> maxLang = _languageService.GetAll();
             int count = 0;
-            foreach (Language lang in maxLang)
+            for (int i = 0; i < fromLang.Count; i++)
             {
-                if (count <= fromLang.Count-1)
+                langId.Add(new PersonLanguage
                 {
-                    langId.Add(new PersonLanguage { 
                     LanguageId = int.Parse(fromLang[count]),
-                    Language = lang
-                    });
-                    count++;
-                }
-             }
+                    Language = _languageService.FindById(int.Parse(fromLang[count])),
+                   
+                });
+                count++;
+            }
             if (ModelState.IsValid)
             {
                 if (personViewModel != null)
@@ -132,12 +131,15 @@ namespace WebAssignmentMVC.Controllers
         }
 
         [HttpPost]
-
         public IActionResult FindPerson(int id)
         {
             Person searchResult = _peopleService.FindById(id);
-            ViewBag.City = _cityService.FindById(searchResult.CtyId);
-            ViewBag.Country = _countryService.FindById(searchResult.CountryId);
+            if (searchResult.CtyId >0)
+            {
+                ViewBag.City = _cityService.FindById(searchResult.CtyId);
+            }
+            if (searchResult.CountryId>0)
+                ViewBag.Country = _countryService.FindById(searchResult.CountryId);
             ViewBag.Language = _peopleService.GetLanguage(id);
             return PartialView("_View", searchResult);
         }
@@ -205,8 +207,42 @@ namespace WebAssignmentMVC.Controllers
 
         public IActionResult Searching(string firstName, string lastName, int countryId, int cityId )
         {
-            List<Person> peopleSearch = _peopleService.Search(firstName, lastName, cityId, countryId);          
-            return View (peopleSearch);
+            List<Person> peopleSearch = _peopleService.Search(firstName, lastName, cityId, countryId);
+            if (peopleSearch!=null)
+            {
+                Person showPerson = new Person();
+                for (int i=0; i<peopleSearch.Count; i++)
+                {
+                    showPerson.Id = peopleSearch[i].Id;
+                    showPerson.FirstName = peopleSearch[i].FirstName;
+                    showPerson.LastName = peopleSearch[i].LastName;
+                    showPerson.Phone = peopleSearch[i].Phone;
+                    showPerson.CtyId = peopleSearch[i].CtyId;
+                    showPerson.CountryId = peopleSearch[i].CountryId;
+                    showPerson.languageSpoken = peopleSearch[i].languageSpoken;
+
+                }
+                List<Person> listPerson = _peopleService.All();
+            string[] forLang = new string[listPerson.Count];
+            List<PersonLanguage> chkLang = new List<PersonLanguage>();
+            for (int i = 1; i < listPerson.Count - 1; i++)
+            {
+
+                listPerson[i].Country = _countryService.FindById(listPerson[i].CountryId);
+                chkLang = _peopleService.GetLanguage(listPerson[i].Id);
+                for (int j = 0; j < chkLang.Count; j++)
+                {
+                    listPerson[i].languageSpoken[j].LanguageId = chkLang[j].LanguageId;
+                    forLang[i] = "-";
+                    forLang[i] = _languageService.GetLangName(chkLang[j].LanguageId);
+                    listPerson[i].languageSpoken[j].Language.LangName = forLang[i];
+                    //                 listPerson[i].Country.Cname= _countryService.FindById(listPerson[i].CountryId).Cname;
+                };
+            }
+                ViewBag.Language = chkLang;
+                return PartialView ("_SearchResult", peopleSearch);
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
@@ -260,16 +296,37 @@ namespace WebAssignmentMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, PersonViewModel person)
+        public IActionResult Edit(int id, PersonViewModel person, int countryId, int cityId)
         {
+            var fromLang = HttpContext.Request.Form["Language"];
+            var fromCountry = HttpContext.Request.Form["Countries"];
+            var fromCity = HttpContext.Request.Form["Cities"];
+            List<PersonLanguage> langId = new List<PersonLanguage>();
+            List<Language> maxLang = _languageService.GetAll();
+            int count = 0;
+            for (int i=0; i<fromLang.Count;i++)
+            {
+                    langId.Add(new PersonLanguage
+                    {
+                        LanguageId = int.Parse(fromLang[count]),
+                        Language = _languageService.FindById(int.Parse(fromLang[count])),
+                        PersonId = id                       
+                    });
+                    count++;
+            }
             if (ModelState.IsValid)
             {
-                _peopleService.Edit(id, person);
+                person.CountryId = countryId;
+                person.CityId = cityId;
+                person.PersonLang = langId;
+                _peopleService.Edit(id, person, langId);
                     return RedirectToAction(nameof(Index));
             }
             else
-                ModelState.AddModelError("System", "Fail to edit City!!!");
-
+                ModelState.AddModelError("System", "Fail to edit Person!!!");
+            ViewBag.Countries = _countryService.GetAll();
+            ViewBag.Cities = _cityService.GetAll();
+            ViewBag.Language = _languageService.GetAll();
             ViewBag.id = id;
             return View(person);
         }

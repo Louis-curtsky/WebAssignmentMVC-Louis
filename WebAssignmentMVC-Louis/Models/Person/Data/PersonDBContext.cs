@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -91,8 +92,23 @@ namespace WebAssignmentMVC.Models.Person.Data
                 );
 
             #endregion of Person Language Join
-        }
 
+            #region Identity User Seeding
+            string AdminId = Guid.NewGuid().ToString();
+            modelBuilder.Entity<PersonUser>().HasData(new PersonUser
+            {
+                Id = AdminId,
+                UserName = "Admin",
+                Email = "admin@gmail.com",
+                PasswordHash = new PasswordHasher<PersonUser>().HashPassword(null, "P@ssW0rd"),
+                FirstName = "Louis",
+                LastName = "Lim",
+                EmailConfirmed = true,
+                DateOfBirth = DateTime.Now
+            });
+
+            #endregion
+        }
 
 
     }

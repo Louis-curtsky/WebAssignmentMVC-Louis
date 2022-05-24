@@ -22,7 +22,7 @@ namespace WebAssignmentMVC.Models.Person
             return _peopleRepo.All();
          }
 
-        public void Edit(int id, PersonViewModel personViewModel)
+        public void Edit(int id, PersonViewModel personViewModel, List<PersonLanguage> langId)
         {
 
             Person person = _peopleRepo.FindByID(id);
@@ -34,7 +34,7 @@ namespace WebAssignmentMVC.Models.Person
             person.CountryId = personViewModel.CountryId;
             person.CtyId = personViewModel.CityId;
             person.languageSpoken = personViewModel.PersonLang;
-            _peopleRepo.Update(person);
+            _peopleRepo.Update(person, langId);
             }
         }
 

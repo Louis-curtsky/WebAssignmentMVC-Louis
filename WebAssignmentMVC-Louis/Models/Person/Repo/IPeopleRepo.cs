@@ -17,7 +17,7 @@ namespace WebAssignmentMVC.Models.Person
         Person FindByID(int id);
 
         List<Person> Search(string firstName, string lastName, int countryId, int cityId);
-        void Update(Person person);
+        void Update(Person person, List<PersonLanguage> langId);
         bool Delete(Person person);
 
         List<PersonLanguage> GetLanguage(int id);

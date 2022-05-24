@@ -24,25 +24,6 @@ $(document).ready(function () {
     })
 });
 
-function findThroughPost(url, firstname, lastname, countryId, cityId) {
-    let inputElement = $("#" + firstname + lastname + countryId + cityId);
-    var data = {
-        [inputElement.attr("name")]: inputElement.val()
-    };
-    $.post(url, data, function (response) {
-        document.getElementById("PersonList").innerHTML = response;
-    })
-};
-
-function findThroughPost(url, Id) {
-    let inputElement = $("#" + Id);
-    var data = {
-        [inputElement.attr("name")]: inputElement.val()
-    };
-    $.post(url, data, function (response) {
-        document.getElementById("PersonList").innerHTML = response;
-    })
-};
 
 function findThroughId(url, inputId) {
     let inputElement = $("#" + inputId);
@@ -54,6 +35,18 @@ function findThroughId(url, inputId) {
         document.getElementById("DetailList").innerHTML = response;
     })
 };
+
+function findThroughPost(url, firstname, lastname, countryId, cityId) {
+    let inputElement = $("#" + firstname + lastname + countryId + cityId);
+    var data = {
+        [inputElement.attr("name")]: inputElement.val()
+    };
+    $.post(url, data, function (response) {
+        document.getElementById("PersonList").innerHTML = response;
+    })
+};
+
+
 
 function findPersonId(url, inputId) {
     let inputElement = $("#" + inputId);

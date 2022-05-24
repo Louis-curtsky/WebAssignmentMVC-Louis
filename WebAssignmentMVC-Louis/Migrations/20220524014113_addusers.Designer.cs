@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAssignmentMVC.Models.Person.Data;
 
 namespace WebAssignmentMVC.Migrations
 {
     [DbContext(typeof(PersonDBContext))]
-    partial class PersonDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220524014113_addusers")]
+    partial class addusers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -222,25 +224,6 @@ namespace WebAssignmentMVC.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "23e42b09-b3f1-43c7-89aa-98c372767c5f",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "fa721658-1c48-4f5e-b810-159b07c00820",
-                            DateOfBirth = new DateTime(2022, 5, 24, 3, 48, 22, 815, DateTimeKind.Local).AddTicks(852),
-                            Email = "admin@gmail.com",
-                            EmailConfirmed = true,
-                            FirstName = "Louis",
-                            LastName = "Lim",
-                            LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEKuqxf0OqPzDbi2SXd6sI2UgZ9usib3ozgJ7Rq03PobOQ2mSTh361+hVjcezztRn7g==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "aa14b3d9-e0e9-4521-84af-f88f6d58b749",
-                            TwoFactorEnabled = false,
-                            UserName = "Admin"
-                        });
                 });
 
             modelBuilder.Entity("WebAssignmentMVC.Models.Person.City", b =>

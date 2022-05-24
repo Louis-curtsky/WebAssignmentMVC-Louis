@@ -14,7 +14,7 @@
                         <div>
                             <div>
                                 <label>First Name</label>
-                                <input name="FirstName" type="text" id="inputId" />
+                                <input name="FirstName" type="text" id="FirstName" />
                             </div>
                             <div>
                                 <label>Last Name</label>
@@ -26,10 +26,10 @@
                             </div>
                             <div>
                                 <label>City</label>
-                                <input name="CityId" type="number" id="cityId"/>
+                                <input name="CityId" type="number" id="CityId"/>
                             </div>
                             <div>
-                                <button onclick="findThroughPost('@Url.Action("Searching", "Person")', 'inputId')">Search</button>
+                                <button onclick="findThroughPost('@Url.Action("Searching", "Person")', new {FirstName,LastName,CountryId,CityId)">Search</button>
                             </div>
                         </div>
                     </form>

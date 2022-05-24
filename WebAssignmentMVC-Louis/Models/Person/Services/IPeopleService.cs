@@ -12,7 +12,7 @@ namespace WebAssignmentMVC.Models.Person
         Person Add(CreatePersonViewModel personViewModel, List<PersonLanguage> personLang);
         Person FindById(int id);
 
-        void Edit(int id, PersonViewModel person);
+        void Edit(int id, PersonViewModel personViewModel, List<PersonLanguage> langId);
         bool Remove(int id);
         List<Person> Search(string firstName, string lastName, int countryId, int cityId);
 
