@@ -42,7 +42,8 @@ namespace WebAssignmentMVC.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    DateOfBirth = table.Column<DateTime>(nullable: false)
+                    DateOfBirth = table.Column<DateTime>(nullable: false),
+                    UserRoleID = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -247,6 +248,25 @@ namespace WebAssignmentMVC.Migrations
                         principalTable: "Persons",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "9919cdf5-d72d-4cb2-83dc-34017017eed7", "d31b176c-06c6-4d8e-bdf9-6f5ff0fa3da5", "Admin", "ADMIN" },
+                    { "5f6ee6bc-49ef-49ba-a7a2-271a1f2c9ce1", "c1a1084a-2ac1-4ac1-95d8-9b4c8ccb6423", "PoUser", "POUSER" },
+                    { "297da0fc-170f-4ead-b04e-ee431efcbd63", "d4e649b0-d65d-4d5f-b10f-885631cf5887", "User", "USER" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "UserRoleID" },
+                values: new object[,]
+                {
+                    { "5ffa57f2-e685-4044-b091-13c68a2687d7", 0, "a051cdc2-2be6-4a14-8c36-948b9e8dc6f2", new DateTime(2022, 6, 3, 8, 51, 19, 455, DateTimeKind.Local).AddTicks(8613), "admin@gmail.com", true, "Louis", "Lim", false, null, null, null, "AQAAAAEAACcQAAAAEKrl7CX6LCuf+wG2OSBZfhEG22hsW86RpM/mWyPLOnJNafaF4IOaYxUvjXwhOMeDRw==", null, false, "b6ff8cd4-533d-4b4a-94b0-56737acdbf15", false, "Admin", null },
+                    { "a638a5c6-8433-4ced-b8ca-7192de11500e", 0, "ec57757c-035b-4c3e-a001-6a2bb6c3b30f", new DateTime(2022, 6, 3, 8, 51, 19, 459, DateTimeKind.Local).AddTicks(4028), "user1@gmail.com", true, "Vicient", "Kent", false, null, null, null, "AQAAAAEAACcQAAAAENTAOOML0z6aPlSXdSbLITwyS5lX4ezvbq3WRYOY/qTJFBfy5itLj0MPidBQDiT7rw==", null, false, "c3dcc8c4-adb5-4be4-94d7-e2dc422a6b5b", false, "User1", null }
                 });
 
             migrationBuilder.InsertData(

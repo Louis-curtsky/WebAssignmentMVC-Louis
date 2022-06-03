@@ -10,7 +10,7 @@ using WebAssignmentMVC.Models.Person.Data;
 namespace WebAssignmentMVC.Migrations
 {
     [DbContext(typeof(PersonDBContext))]
-    [Migration("20220530161406_initialCreate")]
+    [Migration("20220603065119_initialCreate")]
     partial class initialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,6 +46,29 @@ namespace WebAssignmentMVC.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "9919cdf5-d72d-4cb2-83dc-34017017eed7",
+                            ConcurrencyStamp = "d31b176c-06c6-4d8e-bdf9-6f5ff0fa3da5",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "5f6ee6bc-49ef-49ba-a7a2-271a1f2c9ce1",
+                            ConcurrencyStamp = "c1a1084a-2ac1-4ac1-95d8-9b4c8ccb6423",
+                            Name = "PoUser",
+                            NormalizedName = "POUSER"
+                        },
+                        new
+                        {
+                            Id = "297da0fc-170f-4ead-b04e-ee431efcbd63",
+                            ConcurrencyStamp = "d4e649b0-d65d-4d5f-b10f-885631cf5887",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -213,6 +236,9 @@ namespace WebAssignmentMVC.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
+                    b.Property<string>("UserRoleID")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -224,6 +250,42 @@ namespace WebAssignmentMVC.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "5ffa57f2-e685-4044-b091-13c68a2687d7",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "a051cdc2-2be6-4a14-8c36-948b9e8dc6f2",
+                            DateOfBirth = new DateTime(2022, 6, 3, 8, 51, 19, 455, DateTimeKind.Local).AddTicks(8613),
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Louis",
+                            LastName = "Lim",
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAEAACcQAAAAEKrl7CX6LCuf+wG2OSBZfhEG22hsW86RpM/mWyPLOnJNafaF4IOaYxUvjXwhOMeDRw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "b6ff8cd4-533d-4b4a-94b0-56737acdbf15",
+                            TwoFactorEnabled = false,
+                            UserName = "Admin"
+                        },
+                        new
+                        {
+                            Id = "a638a5c6-8433-4ced-b8ca-7192de11500e",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "ec57757c-035b-4c3e-a001-6a2bb6c3b30f",
+                            DateOfBirth = new DateTime(2022, 6, 3, 8, 51, 19, 459, DateTimeKind.Local).AddTicks(4028),
+                            Email = "user1@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Vicient",
+                            LastName = "Kent",
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAEAACcQAAAAENTAOOML0z6aPlSXdSbLITwyS5lX4ezvbq3WRYOY/qTJFBfy5itLj0MPidBQDiT7rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "c3dcc8c4-adb5-4be4-94d7-e2dc422a6b5b",
+                            TwoFactorEnabled = false,
+                            UserName = "User1"
+                        });
                 });
 
             modelBuilder.Entity("WebAssignmentMVC.Models.Person.City", b =>

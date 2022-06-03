@@ -100,9 +100,15 @@ namespace WebAssignmentMVC.Models.Person.Data
             Guid UserRoleId = Guid.NewGuid();
 
             // June 3
+            base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole { Id = "9919cdf5-d72d-4cb2-83dc-34017017eed7", Name = "Admin", NormalizedName = "Admin".ToUpper() },
+                new IdentityRole { Id = "297da0fc-170f-4ead-b04e-ee431efcbd63", Name = "User", NormalizedName = "User".ToUpper() }
+                );
 
-/*            modelBuilder.Entity<AppUser>().HasData
+                    
+            modelBuilder.Entity<AppUser>().HasData
 (new AppUser
 {
     Id = AdminId.ToString(),
@@ -127,7 +133,7 @@ new AppUser
     DateOfBirth = DateTime.Now,
     SecurityStamp = Guid.NewGuid().ToString()
 });
-*/
+
             /*           modelBuilder.Entity<AppUser>().HasData(
                            new IdentityRole
                            {

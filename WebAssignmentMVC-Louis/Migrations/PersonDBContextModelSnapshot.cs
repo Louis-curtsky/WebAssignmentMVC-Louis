@@ -44,6 +44,29 @@ namespace WebAssignmentMVC.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "9919cdf5-d72d-4cb2-83dc-34017017eed7",
+                            ConcurrencyStamp = "d31b176c-06c6-4d8e-bdf9-6f5ff0fa3da5",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "5f6ee6bc-49ef-49ba-a7a2-271a1f2c9ce1",
+                            ConcurrencyStamp = "c1a1084a-2ac1-4ac1-95d8-9b4c8ccb6423",
+                            Name = "PoUser",
+                            NormalizedName = "POUSER"
+                        },
+                        new
+                        {
+                            Id = "297da0fc-170f-4ead-b04e-ee431efcbd63",
+                            ConcurrencyStamp = "d4e649b0-d65d-4d5f-b10f-885631cf5887",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -211,6 +234,9 @@ namespace WebAssignmentMVC.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
+                    b.Property<string>("UserRoleID")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -226,35 +252,35 @@ namespace WebAssignmentMVC.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "dcddbb28-4215-4009-9d37-8a7ced16c4ac",
+                            Id = "5ffa57f2-e685-4044-b091-13c68a2687d7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3a5330c4-b7da-41e2-8354-01a14f2fc8ed",
-                            DateOfBirth = new DateTime(2022, 6, 2, 18, 8, 50, 560, DateTimeKind.Local).AddTicks(1075),
+                            ConcurrencyStamp = "a051cdc2-2be6-4a14-8c36-948b9e8dc6f2",
+                            DateOfBirth = new DateTime(2022, 6, 3, 8, 51, 19, 455, DateTimeKind.Local).AddTicks(8613),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Louis",
                             LastName = "Lim",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEF82BIqBdgy+uxOnlSSfDy6MiIOv1F1S5pBaD8ROfLeF5GMGvvEY7rKWwljHY517sQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKrl7CX6LCuf+wG2OSBZfhEG22hsW86RpM/mWyPLOnJNafaF4IOaYxUvjXwhOMeDRw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a7295174-09cd-4f7c-a256-03bc0fc3dce6",
+                            SecurityStamp = "b6ff8cd4-533d-4b4a-94b0-56737acdbf15",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         },
                         new
                         {
-                            Id = "158b09d1-3af6-4cd7-a978-f4f0fd844c88",
+                            Id = "a638a5c6-8433-4ced-b8ca-7192de11500e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8b64af41-e4b7-4ad6-8aba-4ed5e0332a62",
-                            DateOfBirth = new DateTime(2022, 6, 2, 18, 8, 50, 563, DateTimeKind.Local).AddTicks(9144),
+                            ConcurrencyStamp = "ec57757c-035b-4c3e-a001-6a2bb6c3b30f",
+                            DateOfBirth = new DateTime(2022, 6, 3, 8, 51, 19, 459, DateTimeKind.Local).AddTicks(4028),
                             Email = "user1@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Vicient",
                             LastName = "Kent",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEJH/0x2MEu8xFtqVJ2mE/angauwVjUKYJas0kQ6AJ4o1yahq1fDU923MxF9svg6OJw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENTAOOML0z6aPlSXdSbLITwyS5lX4ezvbq3WRYOY/qTJFBfy5itLj0MPidBQDiT7rw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "16f74ffc-1552-43ff-a8fa-d9d1f8c55be1",
+                            SecurityStamp = "c3dcc8c4-adb5-4be4-94d7-e2dc422a6b5b",
                             TwoFactorEnabled = false,
                             UserName = "User1"
                         });
