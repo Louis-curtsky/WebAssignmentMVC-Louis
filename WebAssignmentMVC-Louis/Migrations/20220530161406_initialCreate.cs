@@ -3,34 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebAssignmentMVC.Migrations
 {
-    public partial class PersonIdentity : Migration
+    public partial class initialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Cities_Persons_PersonId",
-                table: "Cities");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Countries_Persons_PersonId",
-                table: "Countries");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Countries_PersonId",
-                table: "Countries");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Cities_PersonId",
-                table: "Cities");
-
-            migrationBuilder.DropColumn(
-                name: "PersonId",
-                table: "Countries");
-
-            migrationBuilder.DropColumn(
-                name: "PersonId",
-                table: "Cities");
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -65,11 +41,38 @@ namespace WebAssignmentMVC.Migrations
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
-                    LastUser = table.Column<string>(nullable: true)
+                    LastName = table.Column<string>(nullable: true),
+                    DateOfBirth = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Countries",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Cname = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Countries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Language",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LangName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Language", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -178,10 +181,120 @@ namespace WebAssignmentMVC.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Persons_CountryId",
+            migrationBuilder.CreateTable(
+                name: "Cities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    CountryFiD = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cities_Countries_CountryFiD",
+                        column: x => x.CountryFiD,
+                        principalTable: "Countries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Persons",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    Phone = table.Column<string>(nullable: true),
+                    CtyId = table.Column<int>(nullable: false),
+                    CountryId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Persons", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Persons_Countries_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Countries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PersonLanguage",
+                columns: table => new
+                {
+                    PersonId = table.Column<int>(nullable: false),
+                    LanguageId = table.Column<int>(nullable: false),
+                    ID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PersonLanguage", x => new { x.PersonId, x.LanguageId });
+                    table.ForeignKey(
+                        name: "FK_PersonLanguage_Language_LanguageId",
+                        column: x => x.LanguageId,
+                        principalTable: "Language",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PersonLanguage_Persons_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "Persons",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Countries",
+                columns: new[] { "Id", "Cname" },
+                values: new object[,]
+                {
+                    { 1, "Sweden" },
+                    { 2, "France" },
+                    { 3, "Germany" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Language",
+                columns: new[] { "Id", "LangName" },
+                values: new object[,]
+                {
+                    { 1, "Swedish" },
+                    { 2, "English" },
+                    { 3, "Chinese" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cities",
+                columns: new[] { "Id", "CountryFiD", "Name" },
+                values: new object[,]
+                {
+                    { 1, 1, "Stockholm" },
+                    { 2, 1, "Helsingborg" },
+                    { 3, 1, "Växjö" },
+                    { 4, 1, "Gävle" },
+                    { 5, 1, "Trollhättan" },
+                    { 6, 3, "Berlin" },
+                    { 7, 3, "Hamburg" },
+                    { 8, 3, "Munich" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Persons",
-                column: "CountryId");
+                columns: new[] { "Id", "CountryId", "CtyId", "FirstName", "LastName", "Phone" },
+                values: new object[,]
+                {
+                    { 1, 1, 1, "Louis", "Lim", "0765551111" },
+                    { 2, 1, 2, "Michael", "Kent", "0733338888" },
+                    { 3, 1, 3, "Åsa", "Jason", "0721231234" },
+                    { 4, 2, 0, "Andy", "Birch", "0744448888" },
+                    { 5, 2, 0, "Johnny", "Walker", "0751244674" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -222,21 +335,24 @@ namespace WebAssignmentMVC.Migrations
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Persons_Countries_CountryId",
+            migrationBuilder.CreateIndex(
+                name: "IX_Cities_CountryFiD",
+                table: "Cities",
+                column: "CountryFiD");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersonLanguage_LanguageId",
+                table: "PersonLanguage",
+                column: "LanguageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Persons_CountryId",
                 table: "Persons",
-                column: "CountryId",
-                principalTable: "Countries",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                column: "CountryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Persons_Countries_CountryId",
-                table: "Persons");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -253,52 +369,25 @@ namespace WebAssignmentMVC.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Cities");
+
+            migrationBuilder.DropTable(
+                name: "PersonLanguage");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Persons_CountryId",
-                table: "Persons");
+            migrationBuilder.DropTable(
+                name: "Language");
 
-            migrationBuilder.AddColumn<int>(
-                name: "PersonId",
-                table: "Countries",
-                type: "int",
-                nullable: true);
+            migrationBuilder.DropTable(
+                name: "Persons");
 
-            migrationBuilder.AddColumn<int>(
-                name: "PersonId",
-                table: "Cities",
-                type: "int",
-                nullable: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Countries_PersonId",
-                table: "Countries",
-                column: "PersonId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cities_PersonId",
-                table: "Cities",
-                column: "PersonId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Cities_Persons_PersonId",
-                table: "Cities",
-                column: "PersonId",
-                principalTable: "Persons",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Countries_Persons_PersonId",
-                table: "Countries",
-                column: "PersonId",
-                principalTable: "Persons",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+            migrationBuilder.DropTable(
+                name: "Countries");
         }
     }
 }

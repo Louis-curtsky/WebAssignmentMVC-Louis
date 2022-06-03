@@ -148,6 +148,7 @@ namespace WebAssignmentMVC.Controllers
         {
             var fromPerson = HttpContext.Request.Form["PersonId"];
             langPerson.LanguageId = id;
+            langPerson.Person = _PeopleService.FindById(id);
             langPerson.Language = _languageService.FindById(id);
             List<Person> maxPerson = _PeopleService.All();
             List<Language> maxLang = _languageService.GetAll();
@@ -161,11 +162,14 @@ namespace WebAssignmentMVC.Controllers
                     count++;
                 }
             }
-            if (langPerson != null)
+            if (ModelState.IsValid)
             {
-                _languageService.AddLang(langPerson, toAddPer);
-                return RedirectToAction(nameof(Index));
-             }
+                if (langPerson != null)
+                {
+                    _languageService.AddLang(langPerson, toAddPer);
+                    return RedirectToAction(nameof(Index));
+                }
+            }
             return View();
         }
         public IActionResult GetLanguages()

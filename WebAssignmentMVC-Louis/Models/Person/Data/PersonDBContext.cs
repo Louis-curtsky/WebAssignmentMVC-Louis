@@ -12,7 +12,7 @@ using WebAssignmentMVC.Models.Person.ViewModels;
 
 namespace WebAssignmentMVC.Models.Person.Data
 {
-    public class PersonDBContext : IdentityDbContext<PersonUser>
+    public class PersonDBContext : IdentityDbContext<AppUser>
     {
         public PersonDBContext(DbContextOptions<PersonDBContext> options) : base(options)
         { }
@@ -94,19 +94,65 @@ namespace WebAssignmentMVC.Models.Person.Data
             #endregion of Person Language Join
 
             #region Identity User Seeding
-            string AdminId = Guid.NewGuid().ToString();
-            modelBuilder.Entity<PersonUser>().HasData(new PersonUser
-            {
-                Id = AdminId,
-                UserName = "Admin",
-                Email = "admin@gmail.com",
-                PasswordHash = new PasswordHasher<PersonUser>().HashPassword(null, "P@ssW0rd"),
-                FirstName = "Louis",
-                LastName = "Lim",
-                EmailConfirmed = true,
-                DateOfBirth = DateTime.Now
-            });
+            Guid AdminId = Guid.NewGuid();
+            Guid userId = Guid.NewGuid();
+            Guid AdminRoleId = Guid.NewGuid();
+            Guid UserRoleId = Guid.NewGuid();
 
+            // June 3
+
+
+/*            modelBuilder.Entity<AppUser>().HasData
+(new AppUser
+{
+    Id = AdminId.ToString(),
+    UserName = "Admin",
+    Email = "admin@gmail.com",
+    PasswordHash = new PasswordHasher<AppUser>().HashPassword(null, "P@ssW0rd"),
+    FirstName = "Louis",
+    LastName = "Lim",
+    EmailConfirmed = true,
+    DateOfBirth = DateTime.Now,
+    SecurityStamp = Guid.NewGuid().ToString()
+},
+new AppUser
+{
+    Id = userId.ToString(),
+    UserName = "User1",
+    Email = "user1@gmail.com",
+    PasswordHash = new PasswordHasher<AppUser>().HashPassword(null, "NeWY@8rs"),
+    FirstName = "Vicient",
+    LastName = "Kent",
+    EmailConfirmed = true,
+    DateOfBirth = DateTime.Now,
+    SecurityStamp = Guid.NewGuid().ToString()
+});
+*/
+            /*           modelBuilder.Entity<AppUser>().HasData(
+                           new IdentityRole
+                           {
+                               Id = AdminRoleId.ToString(),
+                               Name = "Admin"
+                           },
+
+                           new IdentityRole
+                           {
+                               Id = UserRoleId.ToString(),
+                               Name = "User"
+                           });
+
+
+                       modelBuilder.Entity<AppUser>().HasData(
+                          new IdentityUserRole<string>{
+                              UserId = AdminId.ToString(), 
+                              RoleId = AdminRoleId.ToString()
+                          },
+
+                          new IdentityUserRole<string>
+                          {
+                              UserId = userId.ToString(),
+                              RoleId = UserRoleId.ToString()
+                          });*/
             #endregion
         }
 

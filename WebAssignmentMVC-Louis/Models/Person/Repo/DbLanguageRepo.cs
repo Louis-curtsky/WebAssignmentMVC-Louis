@@ -18,7 +18,11 @@ namespace WebAssignmentMVC.Models.Person.Repo
 
         public void AddLang(PersonLanguage personLang, List<Person> langId)
         {
-            throw new NotImplementedException();
+
+            for (int i=0; i<langId.Count; i++)
+            {
+                Console.WriteLine(langId);
+            }
         }
 
         public Language Create(Language language)

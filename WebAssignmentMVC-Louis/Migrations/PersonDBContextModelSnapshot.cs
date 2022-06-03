@@ -15,7 +15,7 @@ namespace WebAssignmentMVC.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.24")
+                .HasAnnotation("ProductVersion", "3.1.25")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -150,7 +150,7 @@ namespace WebAssignmentMVC.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("WebAssignmentMVC.Models.Identity.PersonUser", b =>
+            modelBuilder.Entity("WebAssignmentMVC.Models.Identity.AppUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -226,20 +226,37 @@ namespace WebAssignmentMVC.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "23e42b09-b3f1-43c7-89aa-98c372767c5f",
+                            Id = "dcddbb28-4215-4009-9d37-8a7ced16c4ac",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fa721658-1c48-4f5e-b810-159b07c00820",
-                            DateOfBirth = new DateTime(2022, 5, 24, 3, 48, 22, 815, DateTimeKind.Local).AddTicks(852),
+                            ConcurrencyStamp = "3a5330c4-b7da-41e2-8354-01a14f2fc8ed",
+                            DateOfBirth = new DateTime(2022, 6, 2, 18, 8, 50, 560, DateTimeKind.Local).AddTicks(1075),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Louis",
                             LastName = "Lim",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEKuqxf0OqPzDbi2SXd6sI2UgZ9usib3ozgJ7Rq03PobOQ2mSTh361+hVjcezztRn7g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEF82BIqBdgy+uxOnlSSfDy6MiIOv1F1S5pBaD8ROfLeF5GMGvvEY7rKWwljHY517sQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "aa14b3d9-e0e9-4521-84af-f88f6d58b749",
+                            SecurityStamp = "a7295174-09cd-4f7c-a256-03bc0fc3dce6",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
+                        },
+                        new
+                        {
+                            Id = "158b09d1-3af6-4cd7-a978-f4f0fd844c88",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "8b64af41-e4b7-4ad6-8aba-4ed5e0332a62",
+                            DateOfBirth = new DateTime(2022, 6, 2, 18, 8, 50, 563, DateTimeKind.Local).AddTicks(9144),
+                            Email = "user1@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Vicient",
+                            LastName = "Kent",
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAEAACcQAAAAEJH/0x2MEu8xFtqVJ2mE/angauwVjUKYJas0kQ6AJ4o1yahq1fDU923MxF9svg6OJw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "16f74ffc-1552-43ff-a8fa-d9d1f8c55be1",
+                            TwoFactorEnabled = false,
+                            UserName = "User1"
                         });
                 });
 
@@ -461,6 +478,9 @@ namespace WebAssignmentMVC.Migrations
                     b.Property<int>("LanguageId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ID")
+                        .HasColumnType("int");
+
                     b.HasKey("PersonId", "LanguageId");
 
                     b.HasIndex("LanguageId");
@@ -479,7 +499,7 @@ namespace WebAssignmentMVC.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("WebAssignmentMVC.Models.Identity.PersonUser", null)
+                    b.HasOne("WebAssignmentMVC.Models.Identity.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -488,7 +508,7 @@ namespace WebAssignmentMVC.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("WebAssignmentMVC.Models.Identity.PersonUser", null)
+                    b.HasOne("WebAssignmentMVC.Models.Identity.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -503,7 +523,7 @@ namespace WebAssignmentMVC.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebAssignmentMVC.Models.Identity.PersonUser", null)
+                    b.HasOne("WebAssignmentMVC.Models.Identity.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -512,7 +532,7 @@ namespace WebAssignmentMVC.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("WebAssignmentMVC.Models.Identity.PersonUser", null)
+                    b.HasOne("WebAssignmentMVC.Models.Identity.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

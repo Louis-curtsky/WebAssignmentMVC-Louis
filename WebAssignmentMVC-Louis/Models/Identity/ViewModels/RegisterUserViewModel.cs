@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebAssignmentMVC.Models.Identity.ViewModels
 {
-    public class UserRegViewModel
+    public class RegisterUserViewModel
     {
         [Required]
         [Display(Name = "User name")]

@@ -13,8 +13,9 @@ namespace WebAssignmentMVC.Models.Person.Data
         public static void Initialize(
         PersonDBContext context,
         RoleManager<IdentityRole> roleManager,
-        UserManager<PersonUser> userManager
+        UserManager<AppUser> userManager
         )
+
         {
             //context.Database.EnsureCreated();//If not using EF migrations
             context.Database.Migrate();
@@ -41,18 +42,18 @@ namespace WebAssignmentMVC.Models.Person.Data
             }
 
             string AdminId = Guid.NewGuid().ToString();
-            PersonUser user = new PersonUser()
+            AppUser user = new AppUser()
             {
-              //  Id = AdminId,
-                UserName = "PowerUser",
-                Email = "admin@gmail.com",
-                PasswordHash = new PasswordHasher<PersonUser>().HashPassword(null, "P@ssW0rd"),
-                FirstName = "Louis",
-                LastName = "Lim",
-                EmailConfirmed = true,
-                DateOfBirth = DateTime.Now
+                Id = AdminId,
+                UserName = "admin",
+                Email = "admin@contoso.com",
+                NormalizedUserName = "ADMIN",
+                NormalizedEmail = "ADMIN@CONTOSO.COM",
+                PasswordHash = new PasswordHasher<AppUser>().HashPassword(null, "P@ssW0rd")
             };
-            IdentityResult resultUser = userManager.CreateAsync(user, "Qwerty!23456").Result;
+            
+
+            IdentityResult resultUser = userManager.CreateAsync(user, "Password!123").Result;
 
             if (!resultUser.Succeeded)
             {
@@ -65,6 +66,7 @@ namespace WebAssignmentMVC.Models.Person.Data
             {
                 throw new Exception($"Faild to grant {rolesToSeed[0]} role to AdminPower");
             }
+            context.SaveChanges();
         }
     }
 }

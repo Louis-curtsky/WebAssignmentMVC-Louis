@@ -6,9 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAssignmentMVC.Models.Identity.ViewModels;
+using WebAssignmentMVC.Models.Person.ViewModels;
 
 namespace WebAssignmentMVC.Controllers
 {
+   
     public class AccountController : Controller
     {
 
@@ -34,7 +36,7 @@ namespace WebAssignmentMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(UserRegViewModel userReg)
+        public async Task<IActionResult> Register(RegisterUserViewModel userReg)
         {
             if (ModelState.IsValid)
             {

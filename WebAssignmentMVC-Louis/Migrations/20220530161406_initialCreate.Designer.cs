@@ -10,14 +10,14 @@ using WebAssignmentMVC.Models.Person.Data;
 namespace WebAssignmentMVC.Migrations
 {
     [DbContext(typeof(PersonDBContext))]
-    [Migration("20220524014113_addusers")]
-    partial class addusers
+    [Migration("20220530161406_initialCreate")]
+    partial class initialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.24")
+                .HasAnnotation("ProductVersion", "3.1.25")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -152,7 +152,7 @@ namespace WebAssignmentMVC.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("WebAssignmentMVC.Models.Identity.PersonUser", b =>
+            modelBuilder.Entity("WebAssignmentMVC.Models.Identity.AppUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -444,6 +444,9 @@ namespace WebAssignmentMVC.Migrations
                     b.Property<int>("LanguageId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ID")
+                        .HasColumnType("int");
+
                     b.HasKey("PersonId", "LanguageId");
 
                     b.HasIndex("LanguageId");
@@ -462,7 +465,7 @@ namespace WebAssignmentMVC.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("WebAssignmentMVC.Models.Identity.PersonUser", null)
+                    b.HasOne("WebAssignmentMVC.Models.Identity.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -471,7 +474,7 @@ namespace WebAssignmentMVC.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("WebAssignmentMVC.Models.Identity.PersonUser", null)
+                    b.HasOne("WebAssignmentMVC.Models.Identity.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -486,7 +489,7 @@ namespace WebAssignmentMVC.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebAssignmentMVC.Models.Identity.PersonUser", null)
+                    b.HasOne("WebAssignmentMVC.Models.Identity.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -495,7 +498,7 @@ namespace WebAssignmentMVC.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("WebAssignmentMVC.Models.Identity.PersonUser", null)
+                    b.HasOne("WebAssignmentMVC.Models.Identity.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

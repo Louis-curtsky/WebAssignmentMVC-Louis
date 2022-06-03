@@ -29,10 +29,17 @@ namespace WebAssignmentMVC
 
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddDbContext<PersonDBContext>
+            // -------------Connection to Database
+               services.AddDbContext<PersonDBContext>
                 (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            //------------------------- Identity -------------------------------------------------------
+/*            services.AddIdentity<AppUser, IdentityRole>()
+                        .AddRoles<IdentityRole>()
+                        .AddEntityFrameworkStores<PersonDBContext>()
+                        .AddDefaultTokenProviders();*/
+
+            // -------------------- IOC ------------------------
             services.AddScoped<IPeopleRepo, IMemoryPeopleRepo>();//Container setting for my IoC
             services.AddScoped<IPeopleService, PeopleService>();//Container setting for my IoC
 
@@ -49,7 +56,7 @@ namespace WebAssignmentMVC
 
             services.AddMvc().AddRazorRuntimeCompilation();
 
-            services.AddIdentity<PersonUser, IdentityRole>()
+            services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<PersonDBContext>()
                 .AddDefaultTokenProviders();
         }
@@ -63,7 +70,9 @@ namespace WebAssignmentMVC
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
             app.UseRouting();
+ 
             app.UseAuthentication();
             app.UseAuthorization();
 
