@@ -34,10 +34,20 @@ namespace WebAssignmentMVC
                 (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             //------------------------- Identity -------------------------------------------------------
-/*            services.AddIdentity<AppUser, IdentityRole>()
+/*                       services.AddIdentity<IdentityUser, IdentityRole>()
                         .AddRoles<IdentityRole>()
                         .AddEntityFrameworkStores<PersonDBContext>()
                         .AddDefaultTokenProviders();*/
+
+            services.AddIdentity<AppUser, IdentityRole>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<PersonDBContext>()
+                .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/Account/AccessDenied";
+            });
 
             // -------------------- IOC ------------------------
             services.AddScoped<IPeopleRepo, IMemoryPeopleRepo>();//Container setting for my IoC
@@ -56,9 +66,6 @@ namespace WebAssignmentMVC
 
             services.AddMvc().AddRazorRuntimeCompilation();
 
-            services.AddIdentity<AppUser, IdentityRole>()
-                .AddEntityFrameworkStores<PersonDBContext>()
-                .AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

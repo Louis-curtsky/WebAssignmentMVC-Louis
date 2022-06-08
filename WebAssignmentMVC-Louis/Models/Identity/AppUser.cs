@@ -14,6 +14,6 @@ namespace WebAssignmentMVC.Models.Identity
         public string LastName { get; set; }
         [PersonalData]
         public DateTime DateOfBirth { get; set; }
-        public string UserRoleID { get; set; }
+        public string UserRolesId { get; set; }
     }
 }

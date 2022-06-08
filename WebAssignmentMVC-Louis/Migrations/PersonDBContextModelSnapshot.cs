@@ -48,24 +48,24 @@ namespace WebAssignmentMVC.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9919cdf5-d72d-4cb2-83dc-34017017eed7",
-                            ConcurrencyStamp = "d31b176c-06c6-4d8e-bdf9-6f5ff0fa3da5",
+                            Id = "30c9d4cc-0e4c-49dc-bac2-07f5b75efc21",
+                            ConcurrencyStamp = "30c9d4cc-0e4c-49dc-bac2-07f5b75efc21",
+                            Name = "SuperAdmin",
+                            NormalizedName = "SuperAdmin"
+                        },
+                        new
+                        {
+                            Id = "3f14719d-9036-40e7-b305-c6175c1b06a4",
+                            ConcurrencyStamp = "3f14719d-9036-40e7-b305-c6175c1b06a4",
                             Name = "Admin",
-                            NormalizedName = "ADMIN"
+                            NormalizedName = "Admin"
                         },
                         new
                         {
-                            Id = "5f6ee6bc-49ef-49ba-a7a2-271a1f2c9ce1",
-                            ConcurrencyStamp = "c1a1084a-2ac1-4ac1-95d8-9b4c8ccb6423",
-                            Name = "PoUser",
-                            NormalizedName = "POUSER"
-                        },
-                        new
-                        {
-                            Id = "297da0fc-170f-4ead-b04e-ee431efcbd63",
-                            ConcurrencyStamp = "d4e649b0-d65d-4d5f-b10f-885631cf5887",
+                            Id = "08ef6793-5b5d-441a-badf-d4e0d13d0499",
+                            ConcurrencyStamp = "08ef6793-5b5d-441a-badf-d4e0d13d0499",
                             Name = "User",
-                            NormalizedName = "USER"
+                            NormalizedName = "User"
                         });
                 });
 
@@ -152,6 +152,23 @@ namespace WebAssignmentMVC.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "697c154b-04a9-4885-aabe-99cfae2c88b4",
+                            RoleId = "30c9d4cc-0e4c-49dc-bac2-07f5b75efc21"
+                        },
+                        new
+                        {
+                            UserId = "42e39f6e-e934-4f4e-90c7-c00838270c54",
+                            RoleId = "3f14719d-9036-40e7-b305-c6175c1b06a4"
+                        },
+                        new
+                        {
+                            UserId = "f2e4b216-f563-4daa-9dc7-55c9986e1de0",
+                            RoleId = "08ef6793-5b5d-441a-badf-d4e0d13d0499"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -234,7 +251,7 @@ namespace WebAssignmentMVC.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<string>("UserRoleID")
+                    b.Property<string>("UserRolesId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -252,37 +269,60 @@ namespace WebAssignmentMVC.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5ffa57f2-e685-4044-b091-13c68a2687d7",
+                            Id = "697c154b-04a9-4885-aabe-99cfae2c88b4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a051cdc2-2be6-4a14-8c36-948b9e8dc6f2",
-                            DateOfBirth = new DateTime(2022, 6, 3, 8, 51, 19, 455, DateTimeKind.Local).AddTicks(8613),
-                            Email = "admin@gmail.com",
+                            ConcurrencyStamp = "186f7754-342a-4176-a351-0440bd348d11",
+                            DateOfBirth = new DateTime(2022, 6, 7, 17, 58, 37, 646, DateTimeKind.Local).AddTicks(1559),
+                            Email = "superadmin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Louis",
                             LastName = "Lim",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEKrl7CX6LCuf+wG2OSBZfhEG22hsW86RpM/mWyPLOnJNafaF4IOaYxUvjXwhOMeDRw==",
+                            NormalizedUserName = "SUPERADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFZFsRP3lTB38x2vO0P6tVew2IqDCuP5OFFhKQM+n+2LLyaUTu+dtfmYL2rVT4EZtw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b6ff8cd4-533d-4b4a-94b0-56737acdbf15",
+                            SecurityStamp = "d65fe6a5-2c33-45cb-97e6-5efbd2accb1b",
                             TwoFactorEnabled = false,
-                            UserName = "Admin"
+                            UserName = "SuperAdmin",
+                            UserRolesId = "30c9d4cc-0e4c-49dc-bac2-07f5b75efc21"
                         },
                         new
                         {
-                            Id = "a638a5c6-8433-4ced-b8ca-7192de11500e",
+                            Id = "42e39f6e-e934-4f4e-90c7-c00838270c54",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ec57757c-035b-4c3e-a001-6a2bb6c3b30f",
-                            DateOfBirth = new DateTime(2022, 6, 3, 8, 51, 19, 459, DateTimeKind.Local).AddTicks(4028),
+                            ConcurrencyStamp = "10e034ca-fcdb-4595-8877-3f9906c9ffa0",
+                            DateOfBirth = new DateTime(2022, 6, 7, 17, 58, 37, 649, DateTimeKind.Local).AddTicks(1048),
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Vicient",
+                            LastName = "Hook",
+                            LockoutEnabled = false,
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGjKX4kHm7Z14wb9hLuyppuFH4liLuVJlcUx+tntFB5mK509G/MW2oTtoiM1CF3Tdw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "fa8bf5e1-bdb6-44c8-96f0-7320995e854e",
+                            TwoFactorEnabled = false,
+                            UserName = "Admin",
+                            UserRolesId = "3f14719d-9036-40e7-b305-c6175c1b06a4"
+                        },
+                        new
+                        {
+                            Id = "f2e4b216-f563-4daa-9dc7-55c9986e1de0",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "099cb883-f879-4f5d-a759-35882cd2d7ad",
+                            DateOfBirth = new DateTime(2022, 6, 7, 17, 58, 37, 650, DateTimeKind.Local).AddTicks(5729),
                             Email = "user1@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Vicient",
                             LastName = "Kent",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAENTAOOML0z6aPlSXdSbLITwyS5lX4ezvbq3WRYOY/qTJFBfy5itLj0MPidBQDiT7rw==",
+                            NormalizedUserName = "USER1",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHxwkj+Fi5Zz/Rb6sLhWqfHfJ0OeopRrOrVQ4eZyCluF5ORPlTI6Y8Of2UB4m0Pfcg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c3dcc8c4-adb5-4be4-94d7-e2dc422a6b5b",
+                            SecurityStamp = "41114678-f72e-4fda-a209-a282c2c15ded",
                             TwoFactorEnabled = false,
-                            UserName = "User1"
+                            UserName = "User1",
+                            UserRolesId = "08ef6793-5b5d-441a-badf-d4e0d13d0499"
                         });
                 });
 

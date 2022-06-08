@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebAssignmentMVC.Migrations
 {
-    public partial class initialCreate : Migration
+    public partial class CreateInitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -43,7 +43,7 @@ namespace WebAssignmentMVC.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: false),
-                    UserRoleID = table.Column<string>(nullable: true)
+                    UserRolesId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -255,18 +255,19 @@ namespace WebAssignmentMVC.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "9919cdf5-d72d-4cb2-83dc-34017017eed7", "d31b176c-06c6-4d8e-bdf9-6f5ff0fa3da5", "Admin", "ADMIN" },
-                    { "5f6ee6bc-49ef-49ba-a7a2-271a1f2c9ce1", "c1a1084a-2ac1-4ac1-95d8-9b4c8ccb6423", "PoUser", "POUSER" },
-                    { "297da0fc-170f-4ead-b04e-ee431efcbd63", "d4e649b0-d65d-4d5f-b10f-885631cf5887", "User", "USER" }
+                    { "30c9d4cc-0e4c-49dc-bac2-07f5b75efc21", "30c9d4cc-0e4c-49dc-bac2-07f5b75efc21", "SuperAdmin", "SuperAdmin" },
+                    { "3f14719d-9036-40e7-b305-c6175c1b06a4", "3f14719d-9036-40e7-b305-c6175c1b06a4", "Admin", "Admin" },
+                    { "08ef6793-5b5d-441a-badf-d4e0d13d0499", "08ef6793-5b5d-441a-badf-d4e0d13d0499", "User", "User" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "UserRoleID" },
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "UserRolesId" },
                 values: new object[,]
                 {
-                    { "5ffa57f2-e685-4044-b091-13c68a2687d7", 0, "a051cdc2-2be6-4a14-8c36-948b9e8dc6f2", new DateTime(2022, 6, 3, 8, 51, 19, 455, DateTimeKind.Local).AddTicks(8613), "admin@gmail.com", true, "Louis", "Lim", false, null, null, null, "AQAAAAEAACcQAAAAEKrl7CX6LCuf+wG2OSBZfhEG22hsW86RpM/mWyPLOnJNafaF4IOaYxUvjXwhOMeDRw==", null, false, "b6ff8cd4-533d-4b4a-94b0-56737acdbf15", false, "Admin", null },
-                    { "a638a5c6-8433-4ced-b8ca-7192de11500e", 0, "ec57757c-035b-4c3e-a001-6a2bb6c3b30f", new DateTime(2022, 6, 3, 8, 51, 19, 459, DateTimeKind.Local).AddTicks(4028), "user1@gmail.com", true, "Vicient", "Kent", false, null, null, null, "AQAAAAEAACcQAAAAENTAOOML0z6aPlSXdSbLITwyS5lX4ezvbq3WRYOY/qTJFBfy5itLj0MPidBQDiT7rw==", null, false, "c3dcc8c4-adb5-4be4-94d7-e2dc422a6b5b", false, "User1", null }
+                    { "697c154b-04a9-4885-aabe-99cfae2c88b4", 0, "186f7754-342a-4176-a351-0440bd348d11", new DateTime(2022, 6, 7, 17, 58, 37, 646, DateTimeKind.Local).AddTicks(1559), "superadmin@gmail.com", true, "Louis", "Lim", false, null, null, "SUPERADMIN", "AQAAAAEAACcQAAAAEFZFsRP3lTB38x2vO0P6tVew2IqDCuP5OFFhKQM+n+2LLyaUTu+dtfmYL2rVT4EZtw==", null, false, "d65fe6a5-2c33-45cb-97e6-5efbd2accb1b", false, "SuperAdmin", "30c9d4cc-0e4c-49dc-bac2-07f5b75efc21" },
+                    { "42e39f6e-e934-4f4e-90c7-c00838270c54", 0, "10e034ca-fcdb-4595-8877-3f9906c9ffa0", new DateTime(2022, 6, 7, 17, 58, 37, 649, DateTimeKind.Local).AddTicks(1048), "admin@gmail.com", true, "Vicient", "Hook", false, null, null, "ADMIN", "AQAAAAEAACcQAAAAEGjKX4kHm7Z14wb9hLuyppuFH4liLuVJlcUx+tntFB5mK509G/MW2oTtoiM1CF3Tdw==", null, false, "fa8bf5e1-bdb6-44c8-96f0-7320995e854e", false, "Admin", "3f14719d-9036-40e7-b305-c6175c1b06a4" },
+                    { "f2e4b216-f563-4daa-9dc7-55c9986e1de0", 0, "099cb883-f879-4f5d-a759-35882cd2d7ad", new DateTime(2022, 6, 7, 17, 58, 37, 650, DateTimeKind.Local).AddTicks(5729), "user1@gmail.com", true, "Vicient", "Kent", false, null, null, "USER1", "AQAAAAEAACcQAAAAEHxwkj+Fi5Zz/Rb6sLhWqfHfJ0OeopRrOrVQ4eZyCluF5ORPlTI6Y8Of2UB4m0Pfcg==", null, false, "41114678-f72e-4fda-a209-a282c2c15ded", false, "User1", "08ef6793-5b5d-441a-badf-d4e0d13d0499" }
                 });
 
             migrationBuilder.InsertData(
@@ -287,6 +288,16 @@ namespace WebAssignmentMVC.Migrations
                     { 1, "Swedish" },
                     { 2, "English" },
                     { 3, "Chinese" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "UserId", "RoleId" },
+                values: new object[,]
+                {
+                    { "697c154b-04a9-4885-aabe-99cfae2c88b4", "30c9d4cc-0e4c-49dc-bac2-07f5b75efc21" },
+                    { "42e39f6e-e934-4f4e-90c7-c00838270c54", "3f14719d-9036-40e7-b305-c6175c1b06a4" },
+                    { "f2e4b216-f563-4daa-9dc7-55c9986e1de0", "08ef6793-5b5d-441a-badf-d4e0d13d0499" }
                 });
 
             migrationBuilder.InsertData(

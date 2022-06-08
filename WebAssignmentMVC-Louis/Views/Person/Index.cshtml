@@ -2,6 +2,20 @@
 @{
     ViewData["Title"] = "Persons - Index";
 }
+
+<!-- Example single danger button -->
+<div class="btn-group">
+    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        People Menu
+    </button>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" asp-controller="Person" asp-action="Create">Create</a>
+        <a class="dropdown-item" asp-controller="Person" asp-action="Searching">Search</a>
+        <a class="dropdown-item" asp-controller="Person" asp-action="FindPerson">Find a Person</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Others</a>
+    </div>
+</div>
 <hr />
 <h1>Person Information</h1>
 
@@ -17,7 +31,7 @@
         <th>Language</th>
     </tr>
     <tbody>
-        @for(int i=0; i<Model.Count; i++)
+        @for (int i = 0; i < Model.Count; i++)
         {
             <tr>
                 <td>@Model[i].Id</td>
@@ -33,14 +47,14 @@
                     <button class="btn btn-warning" onclick="findThroughId('@Url.Action("Edit", "Person", new { id = Model[i].Id})')">Edit</button>
                 </td>
                 <td>
-                        @if (Model[i].languageSpoken != null)
+                    @if (Model[i].languageSpoken != null)
+                    {
+                        for (int j = 0; j < Model[i].languageSpoken.Count; j++)
                         {
-                            for (int j=0; j<Model[i].languageSpoken.Count; j++)
-                            {
-                                List<PersonLanguage> lang = Model[i].languageSpoken;
+                            List<PersonLanguage> lang = Model[i].languageSpoken;
                             <a asp-action="LanguageDetails" asp-route-id="@lang[j].LanguageId">Click</a>
-                            }
                         }
+                    }
                 </td>
             </tr>
         }
