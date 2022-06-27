@@ -11,18 +11,18 @@ $(document).ready(function () {
     })
 });
 
-$(document).ready(function () {
-    $.get("/Person/GetCities", function (response) {
+/*$(document).ready(function () {
+    $.get("/Cities/Details", function (response) {
         console.log(response);
-        $('#cityList').empty();
+        $('#cityName').empty();
         response.map(city =>
-            $('#cityList').append($('<option/>', {
+            $('#cityName').append($('<option/>', {
                 value: city,
                 text: city
 
             })))
     })
-});
+});*/
 
 
 function findThroughId(url, inputId) {
@@ -36,13 +36,14 @@ function findThroughId(url, inputId) {
     })
 };
 
+
 function findThroughPost(url, firstname, lastname, countryId, cityId) {
     let inputElement = $("#" + firstname + lastname + countryId + cityId);
     var data = {
         [inputElement.attr("name")]: inputElement.val()
     };
     $.post(url, data, function (response) {
-        document.getElementById("PersonList").innerHTML = response;
+        document.getElementById("PersonDetailView").innerHTML = response;
     })
 };
 
@@ -55,7 +56,7 @@ function findPersonId(url, inputId) {
     };
     console.log(data);
     $.post(url, data, function (response) {
-        document.getElementById("partialView").innerHTML = response;
+        document.getElementById("View").innerHTML = response;
     })
 };
 

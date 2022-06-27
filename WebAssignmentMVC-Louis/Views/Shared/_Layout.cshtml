@@ -24,22 +24,22 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Person" asp-action="Index">Person Admin</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Person" asp-action="Index">Person</a>
                             </li>
 
 
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Country" asp-action="Index">Country Admin</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Country" asp-action="Index">Country</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Cities" asp-action="Index">Cities Admin</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Cities" asp-action="Index">Cities</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Lanugage" asp-action="Index">Language</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Language" asp-action="Index">Language</a>
                             </li>
                         }
                         }

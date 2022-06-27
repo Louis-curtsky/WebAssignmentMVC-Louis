@@ -56,15 +56,18 @@ namespace WebAssignmentMVC.Controllers
                     PhoneNumber = userReg.Phone,
                     // UserRoleID string is taken from NetUser after Seeding
 
-                    // Admin = f496f91d-0fa8-4a1b-b7ed-4df980fb5dd5
-                    // UserRoleID = "14ebed43-a0b8-4d2e-b2be-740da8a7eea5"
+                    // Admin = 
+                    // UserRoleID = 
                 };
                 IdentityResult result = await _userManager.CreateAsync(user, userReg.Password);
 
                 if (result.Succeeded)
                 {
-                    await _roleManager.CreateAsync(new IdentityRole("User"));
-                    //TODO - SignIn user
+                    // Login with user role assigned...but if policy is only allow superAdmin to assign roles then remark this
+                    // personally it is normal to have login creation with use role assign and limit user role accessibility.
+
+ //                   await _roleManager.CreateAsync(new IdentityRole("User"));
+                 
                     return RedirectToAction("Index", "Home");
                 }
 

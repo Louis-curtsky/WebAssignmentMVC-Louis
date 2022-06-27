@@ -39,6 +39,8 @@ namespace WebAssignmentMVC.Controllers
             {
                 
                 listPerson[i].Country = _countryService.FindById(listPerson[i].CountryId);
+                listPerson[i].Country.Cities = _cityService.GetAll();
+
                 chkLang = _peopleService.GetLanguage(listPerson[i].Id);
                 for (int j=0; j<chkLang.Count; j++)
                 {
@@ -134,17 +136,26 @@ namespace WebAssignmentMVC.Controllers
         public IActionResult FindPerson(int id)
         {
             Person searchResult = _peopleService.FindById(id);
-            if (searchResult.CtyId >0)
+            if (id > 0)
             {
-                ViewBag.City = _cityService.FindById(searchResult.CtyId);
+                if (searchResult.CtyId > 0)
+                {
+                    ViewBag.City = _cityService.FindById(searchResult.CtyId);
+                }
+                if (searchResult.CountryId > 0)
+                {
+                    Country countryName =
+                        _countryService.FindById(searchResult.CountryId);
+                    ViewBag.Country = countryName.Cname;
+                }
+            else
+                    {
+                        searchResult.FirstName = "";
+                        searchResult.Id = 0;
+
+                    }
+                    ViewBag.Language = _peopleService.GetLanguage(id);
             }
-            if (searchResult.CountryId>0)
-            {
-                Country countryName =
-                    _countryService.FindById(searchResult.CountryId);
-                ViewBag.Country = countryName.Cname;
-            }
-            ViewBag.Language = _peopleService.GetLanguage(id);
             return PartialView("_View", searchResult);
         }
 

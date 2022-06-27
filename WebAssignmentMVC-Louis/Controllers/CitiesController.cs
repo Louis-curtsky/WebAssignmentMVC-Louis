@@ -30,9 +30,10 @@ namespace WebAssignmentMVC.Controllers
         }
 
         // GET: Cities/Details/5
-        public IActionResult Details(int? id)
+        public IActionResult Details(int id)
         {
-            return View();
+            string cityName = _cityService.FindById(id);
+            return Json(cityName);
         }
 
         // GET: Cities/Create

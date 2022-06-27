@@ -16,13 +16,11 @@
             }
     </select>
     <div class="form-group">
-        @*<input type="submit" value="Search" class="btn btn-primary" />*@
-        @*<input type="button" title="Find" value="Search"*@ 
-               @*onclick="location.href='@Url.Action("FindPerson", "Person", new { id = Model.Id})'" />*@
+
         <button onclick="findPersonId('@Url.Action("FindPerson", "Person"), new {id=@Model.Id})', 'inputId')" class="button">Search</button>
     </div>
  </form>
-   <div class="partialView" mode="Model">
+   <div class="View" mode="Model">
 
    </div>
 </div>  
